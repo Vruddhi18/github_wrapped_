@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>GitHub Wrapped 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/config.js"></script>
+</head>
+<body>
+  <div class="spotlight" id="spotlight"></div>
+
+  <nav class="nav">
+    <button class="nav-btn active" data-section="hero">🎸 Intro</button>
+    <button class="nav-btn" data-section="summary">📊 Wrapped</button>
+    <button class="nav-btn" data-section="languages">🌈 Languages</button>
+    <button class="nav-btn" data-section="orgs">🏆 Orgs</button>
+    <button class="nav-btn" data-section="activity">📅 Activity</button>
+  </nav>
+
+  <main>
+    <!-- HERO WITH INTERACTIVE GUITAR -->
+    <section id="hero" class="section hero active">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">GitHub Wrapped <span>2025</span></h1>
+          <p class="hero-subtitle">Your coding journey, visualized</p>
+          
+          <div class="input-group">
+            <div class="input-wrapper">
+              <input id="username" type="text" placeholder="Enter GitHub username" />
+              <span class="input-icon">👤</span>
+            </div>
+            <button id="generate" class="generate-btn">Generate Wrapped</button>
+          </div>
+          
+          <div class="hero-stats-preview" id="stats-preview">
+            <p>Try "torvalds" or your username</p>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE GUITAR 🎸 -->
+        <div class="guitar-container" id="guitar">
+          <div class="guitar-body" data-section="summary">
+            <div class="guitar-strings">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="guitar-label">Contributions</div>
+          </div>
+          <div class="guitar-neck" data-section="activity">
+            <div class="guitar-label">Activity</div>
+          </div>
+          <div class="guitar-head" data-section="orgs">
+            <div class="guitar-label">Organizations</div>
+          </div>
+          <div class="guitar-bridge" data-section="languages">
+            <div class="guitar-label">Languages</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WRAPPED SUMMARY -->
+    <section id="summary" class="section stats-grid-container">
+      <div class="section-header">
+        <h2>2025 Highlights</h2>
+        <p>Your top stats this year</p>
+      </div>
+      <div class="stats-grid" id="stats-grid"></div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section id="languages" class="section">
+      <div class="section-header">
+        <h2>Top Languages</h2>
+        <p>Where you spent most of your coding time</p>
+      </div>
+      <div id="languages-chart-container" class="chart-container">
+        <canvas id="languages-chart"></canvas>
+      </div>
+      <div id="languages-list" class="languages-list"></div>
+    </section>
+
+    <!-- ORGS -->
+    <section id="orgs" class="section">
+      <div class="section-header">
+        <h2>🏆 Top Organizations</h2>
+        <p>Where you made the biggest impact</p>
+      </div>
+      <div id="orgs-list" class="orgs-list"></div>
+    </section>
+
+    <!-- ACTIVITY HEATMAP -->
+    <section id="activity" class="section">
+      <div class="section-header">
+        <h2>Activity Heatmap</h2>
+        <p>Your busiest days of 2025</p>
+      </div>
+      <div class="activity-container">
+        <div id="heatmap" class="heatmap"></div>
+        <div id="peak-days" class="peak-days"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="loader" class="loader">
+    <div class="loader-spinner"></div>
+    <p>Fetching your 2025 stats...</p>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
