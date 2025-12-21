@@ -8,16 +8,21 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <!-- Particles Canvas -->
   <canvas id="particles"></canvas>
+  <canvas id="mouse-followers"></canvas>
   
-  <!-- PROGRESS INDICATOR -->
+  <!-- Progress Bar -->
   <div class="progress-bar">
     <div class="progress-fill"></div>
   </div>
 
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+
   <main>
-    <!-- 1. HERO SECTION -->
-    <section class="panel hero-panel" data-panel="1">
+    <!-- 1. HERO PANEL -->
+    <section class="panel hero-panel active" data-panel="1">
       <div class="hero-content">
         <div class="hero-badge">2025</div>
         <h1 class="hero-title">
@@ -28,12 +33,13 @@
         
         <div class="input-cluster">
           <input id="username" type="text" placeholder="Enter GitHub username" class="hero-input">
-          <button id="generate" class="generate-btn">Generate Wrapped</button>
+          <button id="generate" class="generate-btn">
+            <span>Generate</span>
+            <div class="btn-shine"></div>
+          </button>
         </div>
         
-        <div class="demo-hint">
-          <span>Try: torvalds</span>
-        </div>
+        <div class="demo-hint">Try: torvalds • sindresorhus • facebook</div>
       </div>
       
       <div class="hero-visual">
@@ -41,86 +47,113 @@
           <div class="orb large" style="--hue: 240"></div>
           <div class="orb medium" style="--hue: 200"></div>
           <div class="orb small" style="--hue: 280"></div>
+          <div class="orb tiny" style="--hue: 300"></div>
         </div>
       </div>
     </section>
 
-    <!-- 2. USER OVERVIEW -->
+    <!-- 2. OVERVIEW PANEL -->
     <section class="panel overview-panel" data-panel="2">
       <div class="panel-header">
         <h2 class="panel-title">01</h2>
         <div class="panel-subtitle">Profile Overview</div>
       </div>
       
-      <div class="user-avatar" id="userAvatar"></div>
+      <div class="user-profile">
+        <div class="user-avatar" id="userAvatar"></div>
+        <div class="user-info">
+          <h3 id="userName" class="user-name">Loading...</h3>
+          <div id="userBio" class="user-bio">Enter username to see profile</div>
+          <div class="user-streak" id="userStreak"></div>
+        </div>
+      </div>
       
       <div class="overview-stats" id="overviewStats">
         <div class="stat-morph">
-          <span class="stat-number" data-target="0">0</span>
+          <span class="stat-number">0</span>
           <span class="stat-label">Repos</span>
         </div>
         <div class="stat-morph">
-          <span class="stat-number" data-target="0">0</span>
+          <span class="stat-number">0</span>
           <span class="stat-label">Followers</span>
         </div>
         <div class="stat-morph">
-          <span class="stat-number" data-target="0">0</span>
+          <span class="stat-number">0</span>
           <span class="stat-label">Years</span>
         </div>
       </div>
     </section>
 
-    <!-- 3. TOP LANGUAGES -->
+    <!-- 3. LANGUAGES PANEL -->
     <section class="panel languages-panel" data-panel="3">
       <div class="panel-header">
         <h2 class="panel-title">02</h2>
-        <div class="panel-subtitle">Code Languages</div>
+        <div class="panel-subtitle">Top Languages</div>
       </div>
-      
-      <div class="language-stack" id="languageStack"></div>
+      <div class="language-stack" id="languageStack">
+        <div class="lang-card placeholder">
+          <div class="lang-color" style="background: #f7df1e"></div>
+          <div class="lang-name">Enter username</div>
+          <div class="lang-stats">to see your languages</div>
+        </div>
+      </div>
     </section>
 
-    <!-- 4. TOP REPOS -->
+    <!-- 4. REPOS PANEL -->
     <section class="panel repos-panel" data-panel="4">
       <div class="panel-header">
         <h2 class="panel-title">03</h2>
-        <div class="panel-subtitle">Star Repositories</div>
+        <div class="panel-subtitle">Top Repositories</div>
       </div>
-      
-      <div class="repos-flow" id="reposFlow"></div>
+      <div class="repos-flow" id="reposFlow">
+        <div class="repo-card placeholder">
+          <div class="lang-name">Your repos will appear here</div>
+        </div>
+      </div>
     </section>
 
-    <!-- 5. ACTIVITY FLOW -->
+    <!-- 5. ACTIVITY PANEL -->
     <section class="panel activity-panel" data-panel="5">
       <div class="panel-header">
         <h2 class="panel-title">04</h2>
-        <div class="panel-subtitle">Contribution Flow</div>
+        <div class="panel-subtitle">Activity Flow</div>
       </div>
-      
       <div class="flow-container">
-        <div class="flow-strip" id="flowStrip"></div>
+        <div class="flow-strip-wrapper">
+          <div class="flow-strip" id="flowStrip"></div>
+        </div>
+        <div class="flow-tooltip" id="flowTooltip"></div>
       </div>
-      
-      <div class="activity-insights" id="activityInsights"></div>
+      <div class="activity-insights" id="activityInsights">
+        <div class="lang-card">
+          <div class="lang-name">127 Active Days</div>
+          <div class="lang-stats">Total contribution days</div>
+        </div>
+      </div>
     </section>
 
-    <!-- 6. FINAL SCREEN -->
+    <!-- 6. FINAL PANEL -->
     <section class="panel final-panel" data-panel="6">
       <div class="final-content">
-        <h2 class="final-title">Your 2025 Coding Journey</h2>
-        <div class="final-badge" id="productivityBadge"></div>
+        <h2 class="final-title">Your 2025 Story</h2>
+        <div class="productivity-badge" id="productivityBadge">
+          <div class="badge-score">85</div>
+          <div class="badge-label">Code Legend</div>
+          <div class="badge-share">👆 Click to share</div>
+        </div>
         <div class="share-cluster">
-          <button class="share-btn">Share Wrapped</button>
-          <button class="export-btn">Export Image</button>
+          <button class="share-btn" id="shareBtn">📱 Share Wrapped</button>
+          <button class="export-btn" id="exportBtn">💾 Export Image</button>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- Loader -->
   <div id="loader" class="loader">
     <div class="loader-core">
       <div class="loader-orb"></div>
-      <span>Generating your Wrapped...</span>
+      <span id="loaderText">Fetching data...</span>
     </div>
   </div>
 
