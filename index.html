@@ -8,154 +8,191 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Particles Canvas -->
-  <canvas id="particles"></canvas>
-  <canvas id="mouse-followers"></canvas>
+  <!-- Ambient Canvas -->
+  <canvas id="ambient"></canvas>
+  <canvas id="cursor-trail"></canvas>
   
-  <!-- Progress Bar -->
-  <div class="progress-bar">
-    <div class="progress-fill"></div>
+  <!-- Progress Indicator -->
+  <div class="progress-indicator">
+    <div class="progress-line"></div>
   </div>
 
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" id="themeToggle">🌙</button>
+  <!-- Controls -->
+  <div class="controls">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
+  </div>
 
   <main>
-    <!-- 1. HERO PANEL -->
-    <section class="panel hero-panel active" data-panel="1">
-      <div class="hero-content">
+    <!-- 1. HERO -->
+    <section class="panel hero active" data-panel="1">
+      <div class="hero-container">
         <div class="hero-badge">2025</div>
         <h1 class="hero-title">
-          <span class="title-glow">GitHub</span>
-          <span class="title-glow">Wrapped</span>
+          <span class="title-gradient">GitHub</span>
+          <span class="title-gradient">Wrapped</span>
         </h1>
-        <p class="hero-subtitle">Your year in code</p>
+        <p class="hero-subtitle">Your year in code, reimagined</p>
         
-        <div class="input-cluster">
-          <input id="username" type="text" placeholder="Enter GitHub username" class="hero-input">
-          <button id="generate" class="generate-btn">
-            <span>Generate</span>
-            <div class="btn-shine"></div>
+        <div class="input-section">
+          <input id="username" type="text" placeholder="Enter GitHub username..." aria-label="GitHub username">
+          <button id="generate" class="primary-btn">
+            <span>Generate Wrapped</span>
+            <div class="btn-glow"></div>
           </button>
         </div>
         
-        <div class="demo-hint">Try: torvalds • sindresorhus • facebook</div>
-      </div>
-      
-      <div class="hero-visual">
-        <div class="orb-cluster">
-          <div class="orb large" style="--hue: 240"></div>
-          <div class="orb medium" style="--hue: 200"></div>
-          <div class="orb small" style="--hue: 280"></div>
-          <div class="orb tiny" style="--hue: 300"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. OVERVIEW PANEL -->
-    <section class="panel overview-panel" data-panel="2">
-      <div class="panel-header">
-        <h2 class="panel-title">01</h2>
-        <div class="panel-subtitle">Profile Overview</div>
-      </div>
-      
-      <div class="user-profile">
-        <div class="user-avatar" id="userAvatar"></div>
-        <div class="user-info">
-          <h3 id="userName" class="user-name">Loading...</h3>
-          <div id="userBio" class="user-bio">Enter username to see profile</div>
-          <div class="user-streak" id="userStreak"></div>
+        <div class="demo-usernames">
+          <span>Try:</span>
+          <button class="demo-btn" data-user="torvalds">torvalds</button>
+          <button class="demo-btn" data-user="sindresorhus">sindresorhus</button>
+          <button class="demo-btn" data-user="facebook">facebook</button>
         </div>
       </div>
       
-      <div class="overview-stats" id="overviewStats">
-        <div class="stat-morph">
-          <span class="stat-number">0</span>
-          <span class="stat-label">Repos</span>
-        </div>
-        <div class="stat-morph">
-          <span class="stat-number">0</span>
-          <span class="stat-label">Followers</span>
-        </div>
-        <div class="stat-morph">
-          <span class="stat-number">0</span>
-          <span class="stat-label">Years</span>
-        </div>
+      <div class="hero-ambient">
+        <div class="ambient-orb primary" style="--hue: 160"></div>
+        <div class="ambient-orb secondary" style="--hue: 180"></div>
+        <div class="ambient-orb accent" style="--hue: 200"></div>
       </div>
     </section>
 
-    <!-- 3. LANGUAGES PANEL -->
-    <section class="panel languages-panel" data-panel="3">
+    <!-- 2. PROFILE OVERVIEW -->
+    <section class="panel overview" data-panel="2">
       <div class="panel-header">
-        <h2 class="panel-title">02</h2>
-        <div class="panel-subtitle">Top Languages</div>
+        <div class="panel-number">01</div>
+        <h2 class="panel-title">Profile Snapshot</h2>
       </div>
-      <div class="language-stack" id="languageStack">
-        <div class="lang-card placeholder">
-          <div class="lang-color" style="background: #f7df1e"></div>
-          <div class="lang-name">Enter username</div>
-          <div class="lang-stats">to see your languages</div>
+      
+      <div class="profile-card" id="profileCard">
+        <div class="profile-avatar" id="userAvatar"></div>
+        <div class="profile-info">
+          <h3 id="userName" class="profile-name">Loading...</h3>
+          <p id="userBio" class="profile-bio">Enter username to see profile</p>
+          <div class="profile-streak" id="userStreak"></div>
+        </div>
+      </div>
+
+      <div class="stats-grid" id="overviewStats">
+        <div class="stat-card">
+          <div class="stat-value" data-target="0">0</div>
+          <div class="stat-label">Public Repos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-target="0">0</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-target="0">0</div>
+          <div class="stat-label">Years Active</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-target="0">0</div>
+          <div class="stat-label">Total Stars</div>
         </div>
       </div>
     </section>
 
-    <!-- 4. REPOS PANEL -->
-    <section class="panel repos-panel" data-panel="4">
+    <!-- 3. TOP LANGUAGES -->
+    <section class="panel languages" data-panel="3">
       <div class="panel-header">
-        <h2 class="panel-title">03</h2>
-        <div class="panel-subtitle">Top Repositories</div>
+        <div class="panel-number">02</div>
+        <h2 class="panel-title">Language Breakdown</h2>
       </div>
-      <div class="repos-flow" id="reposFlow">
-        <div class="repo-card placeholder">
-          <div class="lang-name">Your repos will appear here</div>
+      <div class="languages-container" id="languageStack">
+        <div class="lang-placeholder">
+          <div class="lang-icon">🌐</div>
+          <h3>Your languages will appear here</h3>
         </div>
       </div>
     </section>
 
-    <!-- 5. ACTIVITY PANEL -->
-    <section class="panel activity-panel" data-panel="5">
+    <!-- 4. TOP REPOS -->
+    <section class="panel repositories" data-panel="4">
       <div class="panel-header">
-        <h2 class="panel-title">04</h2>
-        <div class="panel-subtitle">Activity Flow</div>
+        <div class="panel-number">03</div>
+        <h2 class="panel-title">Star Repositories</h2>
       </div>
-      <div class="flow-container">
-        <div class="flow-strip-wrapper">
-          <div class="flow-strip" id="flowStrip"></div>
-        </div>
-        <div class="flow-tooltip" id="flowTooltip"></div>
-      </div>
-      <div class="activity-insights" id="activityInsights">
-        <div class="lang-card">
-          <div class="lang-name">127 Active Days</div>
-          <div class="lang-stats">Total contribution days</div>
+      <div class="repos-container" id="reposFlow">
+        <div class="repo-placeholder">
+          <div class="repo-icon">📂</div>
+          <h4>Top repos loading...</h4>
         </div>
       </div>
     </section>
 
-    <!-- 6. FINAL PANEL -->
-    <section class="panel final-panel" data-panel="6">
-      <div class="final-content">
-        <h2 class="final-title">Your 2025 Story</h2>
-        <div class="productivity-badge" id="productivityBadge">
-          <div class="badge-score">85</div>
-          <div class="badge-label">Code Legend</div>
-          <div class="badge-share">👆 Click to share</div>
+    <!-- 5. ACTIVITY HEATMAP -->
+    <section class="panel activity" data-panel="5">
+      <div class="panel-header">
+        <div class="panel-number">04</div>
+        <h2 class="panel-title">Activity Heatmap</h2>
+      </div>
+      <div class="heatmap-container">
+        <div class="heatmap-legend">
+          <div class="legend-item low"></div>
+          <div class="legend-item medium"></div>
+          <div class="legend-item high"></div>
+          <span>Least → Most Active</span>
         </div>
-        <div class="share-cluster">
-          <button class="share-btn" id="shareBtn">📱 Share Wrapped</button>
-          <button class="export-btn" id="exportBtn">💾 Export Image</button>
+        <div class="heatmap-grid" id="heatmapGrid"></div>
+      </div>
+      <div class="activity-stats" id="activityInsights"></div>
+    </section>
+
+    <!-- 6. CONTRIBUTIONS NETWORK -->
+    <section class="panel network" data-panel="6">
+      <div class="panel-header">
+        <div class="panel-number">05</div>
+        <h2 class="panel-title">Collaboration Network</h2>
+      </div>
+      <div class="network-container" id="networkViz">
+        <canvas class="network-canvas" id="networkCanvas"></canvas>
+        <div class="network-placeholder">
+          <div class="network-icon">🌐</div>
+          <h3>Collaboration graph loading...</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ACHIEVEMENTS -->
+    <section class="panel achievements" data-panel="7">
+      <div class="panel-header">
+        <div class="panel-number">06</div>
+        <h2 class="panel-title">2025 Achievements</h2>
+      </div>
+      <div class="achievements-grid" id="achievementsGrid"></div>
+    </section>
+
+    <!-- 8. FINAL SUMMARY -->
+    <section class="panel summary" data-panel="8">
+      <div class="summary-content">
+        <h2 class="summary-title">Your 2025 Developer Story</h2>
+        <div class="summary-badge" id="productivityBadge">
+          <div class="badge-metric">
+            <span class="metric-score" id="finalScore">85</span>
+            <span class="metric-label">Productivity Score</span>
+          </div>
+          <div class="badge-title" id="badgeTitle">Code Legend</div>
+        </div>
+        <div class="share-actions">
+          <button class="share-btn primary" id="shareBtn">📱 Share on Social</button>
+          <button class="share-btn secondary" id="exportBtn">💾 Export as Image</button>
+          <button class="share-btn tertiary" id="playlistBtn">🎵 Spotify Wrapped Code</button>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Loader -->
+  <!-- Loading Overlay -->
   <div id="loader" class="loader">
-    <div class="loader-core">
-      <div class="loader-orb"></div>
-      <span id="loaderText">Fetching data...</span>
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <span id="loaderText">Fetching GitHub data...</span>
     </div>
   </div>
+
+  <!-- Tooltips -->
+  <div class="tooltip" id="globalTooltip"></div>
 
   <script src="js/app.js"></script>
 </body>
