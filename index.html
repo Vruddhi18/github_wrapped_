@@ -1,164 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>GitHub Wrapped 2025</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body data-theme="dark">
-  <!-- Background Canvas -->
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  
-  <!-- Gradient Overlay -->
-  <div class="bg-gradient"></div>
-  
-  <!-- Controls -->
-  <div class="controls">
-    <button class="control-btn theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
-    <button class="control-btn sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
-  </div>
-
-  <!-- Progress Ring -->
-  <div class="progress-ring-container">
-    <svg class="progress-ring" viewBox="0 0 120 120">
+<body>
+  <!-- Progress -->
+  <div class="progress">
+    <svg viewBox="0 0 120 120" class="progress-ring">
       <defs>
-        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#6366f1"/>
-          <stop offset="100%" stop-color="#8b5cf6"/>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6366f1" />
+          <stop offset="100%" stop-color="#8b5cf6" />
         </linearGradient>
       </defs>
-      <circle class="progress-ring-bg" cx="60" cy="60" r="52"></circle>
-      <circle class="progress-ring-fill" cx="60" cy="60" r="52" id="progressRing"></circle>
+      <circle
+        cx="60"
+        cy="60"
+        r="52"
+        fill="none"
+        stroke="rgba(255,255,255,0.15)"
+        stroke-width="8"
+      />
+      <circle
+        id="progressRing"
+        cx="60"
+        cy="60"
+        r="52"
+        fill="none"
+        stroke="url(#grad)"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-dasharray="327"
+        stroke-dashoffset="327"
+      />
     </svg>
-    <div class="progress-text" id="progressText">01/08</div>
+    <div id="progressText" class="progress-text">01/08</div>
   </div>
 
-  <!-- Main Content -->
-  <main class="wrapped-container">
-    <!-- Slide 1: Hero -->
-    <section class="wrapped-slide hero active" data-slide="1">
-      <div class="slide-content">
-        <div class="wrapped-badge">2025</div>
-        <h1 class="wrapped-title">
+  <!-- Manual controls -->
+  <button class="arrow arrow-left" id="prevBtn">◀</button>
+  <button class="arrow arrow-right" id="nextBtn">▶</button>
+
+  <!-- Slides -->
+  <main class="slider" id="slider">
+    <section class="slide active" data-index="0">
+      <div class="slide-inner">
+        <div class="badge">2025</div>
+        <h1 class="hero-title">
           <span>Your</span>
           <span>GitHub</span>
           <span>Wrapped</span>
         </h1>
-        <p class="wrapped-subtitle">Your year in code</p>
-        <div class="input-wrapper">
-          <input id="username" type="text" placeholder="Enter GitHub username" autocomplete="off">
-          <button id="generate" class="generate-btn" disabled>Generate</button>
+        <p class="hero-subtitle">Your year in code.</p>
+        <div class="input-row">
+          <input
+            id="username"
+            type="text"
+            placeholder="Enter GitHub username"
+            autocomplete="off"
+          />
+          <button id="generateBtn" disabled>Generate</button>
         </div>
-        <div class="demo-usernames">
-          Try: <button class="demo-btn" data-user="torvalds">torvalds</button> • 
-               <button class="demo-btn" data-user="sindresorhus">sindresorhus</button> • 
-               <button class="demo-btn" data-user="facebook">facebook</button>
-        </div>
+        <p class="hint">Autoplays after generate. Use ◀ ▶ or arrow keys to navigate.</p>
       </div>
     </section>
 
-    <!-- Slide 2: Profile -->
-    <section class="wrapped-slide profile" data-slide="2">
-      <div class="slide-content">
-        <div class="profile-circle">
-          <div class="avatar" id="userAvatar"></div>
-        </div>
-        <h2 class="slide-title" id="userName">Loading...</h2>
-        <p class="slide-subtitle" id="userBio">Enter username</p>
-        <div class="streak-display" id="userStreak">
-          <div class="streak-flame">🔥</div>
-          <div class="streak-number">0</div>
-          <div class="streak-label">Day Streak</div>
-        </div>
+    <section class="slide" data-index="1">
+      <div class="slide-inner">
+        <h2 class="slide-title">Profile</h2>
+        <p id="userName">Your name here</p>
+        <p id="userBio" class="muted">Generate to load data.</p>
       </div>
     </section>
 
-    <!-- Slide 3: Stats -->
-    <section class="wrapped-slide stats" data-slide="3">
-      <div class="slide-content">
-        <h2 class="slide-title">Your Stats</h2>
-        <div class="stats-grid" id="statsGrid"></div>
+    <section class="slide" data-index="2">
+      <div class="slide-inner">
+        <h2 class="slide-title">Stats</h2>
+        <div id="statsGrid" class="stats-grid"></div>
       </div>
     </section>
 
-    <!-- Slide 4: Languages -->
-    <section class="wrapped-slide languages" data-slide="4">
-      <div class="slide-content">
-        <h2 class="slide-title">Top Languages</h2>
-        <div class="language-bars" id="languageBars"></div>
+    <section class="slide" data-index="3">
+      <div class="slide-inner">
+        <h2 class="slide-title">Top languages</h2>
+        <div id="languageBars" class="language-bars"></div>
       </div>
     </section>
 
-    <!-- Slide 5: Top Repos -->
-    <section class="wrapped-slide repos" data-slide="5">
-      <div class="slide-content">
-        <h2 class="slide-title">Starred Repos</h2>
-        <div class="repo-grid" id="repoGrid"></div>
+    <section class="slide" data-index="4">
+      <div class="slide-inner">
+        <h2 class="slide-title">Top repos</h2>
+        <div id="repoGrid" class="repo-grid"></div>
       </div>
     </section>
 
-    <!-- Slide 6: Contributions -->
-    <section class="wrapped-slide heatmap" data-slide="6">
-      <div class="slide-content">
+    <section class="slide" data-index="5">
+      <div class="slide-inner">
         <h2 class="slide-title">Contributions</h2>
-        <div class="heatmap-container">
-          <div class="heatmap-canvas" id="heatmapCanvas"></div>
-          <div class="contrib-stats">
-            <div class="stat-item">
-              <span id="activeDays">0</span>
-              <span>Active Days</span>
-            </div>
-            <div class="stat-item">
-              <span id="totalCommits">0</span>
-              <span>Commits</span>
-            </div>
-          </div>
-        </div>
+        <p class="muted">Fake heatmap here or your own component.</p>
       </div>
     </section>
 
-    <!-- Slide 7: Persona -->
-    <section class="wrapped-slide persona" data-slide="7">
-      <div class="slide-content">
-        <h2 class="slide-title">Your Persona</h2>
-        <div class="persona-card" id="personaCard">
-          <div class="persona-icon" id="personaIcon">👨‍💻</div>
-          <div class="persona-title" id="personaTitle">Loading...</div>
-          <div class="persona-desc" id="personaDesc">Analysis in progress...</div>
-        </div>
+    <section class="slide" data-index="6">
+      <div class="slide-inner">
+        <h2 class="slide-title">Persona</h2>
+        <p id="personaTitle">Developer archetype</p>
+        <p id="personaDesc" class="muted">Generated from your stats.</p>
       </div>
     </section>
 
-    <!-- Slide 8: Share -->
-    <section class="wrapped-slide share" data-slide="8">
-      <div class="slide-content">
-        <h2 class="slide-title">Share Your Wrapped</h2>
-        <div class="share-card">
-          <div class="final-score" id="finalScore">85</div>
-          <div class="final-title" id="badgeTitle">Code Legend</div>
-          <div class="share-actions">
-            <button class="share-btn primary" id="shareBtn">📱 Share</button>
-            <button class="share-btn secondary" id="exportBtn">💾 Export</button>
-          </div>
-        </div>
+    <section class="slide" data-index="7">
+      <div class="slide-inner">
+        <h2 class="slide-title">Share</h2>
+        <p id="finalScore" class="hero-subtitle">Score: 0 / 100</p>
+        <button id="shareBtn" class="primary-btn">Copy summary</button>
       </div>
     </section>
   </main>
 
   <!-- Loader -->
-  <div class="loader-overlay" id="loader">
-    <div class="loader-content">
-      <div class="loader-spinner"></div>
-      <span id="loaderText">Loading...</span>
-    </div>
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <span id="loaderText">Loading…</span>
   </div>
-
-  <!-- Tooltip -->
-  <div class="tooltip" id="tooltip"></div>
 
   <script src="js/app.js"></script>
 </body>
