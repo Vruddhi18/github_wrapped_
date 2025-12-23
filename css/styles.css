@@ -908,3 +908,162 @@ body {
 .toast.show {
   transform: translateX(0);
 }
+/* styles.css - PERFECT RESPONSIVE + ANTI-AUTO-SCROLL */
+@media (max-width: 768px) {
+  /* PERFECT MOBILE LAYOUT */
+  .progress {
+    top: 1rem !important;
+    left: 1rem !important;
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .arrow {
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 1.2rem !important;
+  }
+
+  .arrow-left { left: 1rem !important; }
+  .arrow-right { right: 1rem !important; }
+
+  .nav-dots {
+    right: 1rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .nav-dot {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .slide-inner {
+    margin: 0 1rem !important;
+    padding: 2rem 1.5rem !important;
+    border-radius: 20px !important;
+  }
+
+  /* MOBILE STACK */
+  .input-row {
+    flex-direction: column !important;
+    gap: 0.8rem !important;
+  }
+
+  #username {
+    padding: 1rem !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  .gradient-btn {
+    padding: 1rem 1.5rem !important;
+  }
+
+  /* MOBILE GRIDS */
+  .stats-grid,
+  .repo-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .profile-header {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+
+  .avatar {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .achievements {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* Mobile heatmap */
+  .heatmap-grid {
+    grid-template-columns: repeat(15, 10px) !important;
+    grid-template-rows: repeat(7, 10px) !important;
+    gap: 1px !important;
+    padding: 0.8rem !important;
+  }
+
+  /* Hero text smaller on mobile */
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem) !important;
+  }
+
+  .slide-title {
+    font-size: 1.8rem !important;
+  }
+
+  /* Touch targets */
+  .stat-card,
+  .repo-card,
+  .language-row {
+    min-height: 80px !important;
+  }
+
+  /* Hide particles on very small screens */
+  @media (max-width: 480px) {
+    .particles { display: none !important; }
+  }
+}
+
+/* ULTRA-WIDE SUPPORT */
+@media (min-width: 1440px) {
+  .slide-inner {
+    max-width: 800px !important;
+    padding: 4rem 3rem !important;
+  }
+  
+  .stats-grid,
+  .repo-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* iOS Safari fixes */
+@supports (-webkit-touch-callout: none) {
+  #username {
+    font-size: 16px !important; /* Prevent zoom */
+  }
+  
+  .slide {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .slide-inner {
+    padding: 1.5rem !important;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* PERFECT TOUCH INTERACTIONS */
+@media (hover: none) and (pointer: coarse) {
+  .glow-hover:active {
+    transform: scale(0.95) !important;
+  }
+  
+  .repo-card:active,
+  .stat-card:active {
+    transform: translateY(-5px) !important;
+  }
+}
+
+/* ANTI-SCROLL IMPROVEMENTS */
+body.typing .slider {
+  pointer-events: none;
+}
+
+#username:focus + .input-row ~ * {
+  pointer-events: none;
+}
+
