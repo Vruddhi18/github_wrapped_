@@ -1,204 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>GitHub Wrapped 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Animated Particles -->
+  <!-- Particles Background -->
   <div class="particles" id="particles"></div>
 
-  <!-- Progress Ring with Glow -->
+  <!-- Progress Ring -->
   <div class="progress">
     <svg viewBox="0 0 120 120" class="progress-ring">
       <defs>
         <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#6366f1" />
-          <stop offset="50%" stop-color="#8b5cf6" />
-          <stop offset="100%" stop-color="#ec4899" />
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#8b5cf6"/>
         </linearGradient>
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge> 
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
       </defs>
       <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
-      <circle id="progressRing" cx="60" cy="60" r="52" fill="none" stroke="url(#grad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" filter="url(#glow)"/>
+      <circle id="progressRing" cx="60" cy="60" r="52" fill="none" stroke="url(#grad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"/>
     </svg>
     <div id="progressText" class="progress-text">01/08</div>
   </div>
 
-  <!-- Floating Navigation Dots -->
+  <!-- Navigation Dots -->
   <div class="nav-dots" id="navDots"></div>
 
-  <!-- Manual controls with hover glow -->
-  <button class="arrow arrow-left glow-hover" id="prevBtn">◀</button>
-  <button class="arrow arrow-right glow-hover" id="nextBtn">▶</button>
+  <!-- Controls -->
+  <button class="arrow arrow-left" id="prevBtn">◀</button>
+  <button class="arrow arrow-right" id="nextBtn">▶</button>
 
   <!-- Slides -->
   <main class="slider" id="slider">
-    <section class="slide active" data-index="0" data-theme="indigo">
+    <!-- Slide 1: Welcome -->
+    <section class="slide active" data-index="0">
       <div class="slide-inner">
-        <div class="badge shimmer">2025</div>
+        <div class="badge">2025</div>
         <h1 class="hero-title">
           <span>Your</span>
           <span>GitHub</span>
           <span>Wrapped</span>
         </h1>
-        <p class="hero-subtitle">Your year in code, beautifully wrapped ✨</p>
+        <p class="hero-subtitle">Your year in code ✨</p>
         <div class="input-row">
-          <div class="input-wrapper">
-            <input id="username" type="text" placeholder="Enter GitHub username" autocomplete="off" />
-            <span class="input-glow"></span>
-          </div>
-          <button id="generateBtn" class="primary-btn gradient-btn" disabled>Generate Wrapped</button>
+          <input id="username" type="text" placeholder="Enter GitHub username (torvalds)" autocomplete="off">
+          <button id="generateBtn" class="gradient-btn" disabled>Generate</button>
         </div>
-        <p class="hint typewriter">Autoplays after generate • Arrow keys to navigate • Click repos to visit</p>
+        <p class="hint">Press Enter or click Generate</p>
       </div>
     </section>
 
-    <section class="slide" data-index="1" data-theme="purple">
-      <div class="slide-inner profile-slide">
+    <!-- Slide 2: Profile -->
+    <section class="slide" data-index="1">
+      <div class="slide-inner">
         <div class="profile-header">
-          <div class="avatar-container">
-            <img id="userAvatar" class="avatar glow-hover" src="" alt="Profile" />
-            <div class="avatar-ring"></div>
-          </div>
+          <img id="userAvatar" class="avatar" src="" alt="Avatar">
           <div class="profile-info">
-            <h2 id="userName" class="slide-title">Your name</h2>
-            <p id="userBio" class="bio-text">Generate to see your stats ✨</p>
+            <h2 id="userName" class="slide-title">Your Profile</h2>
+            <p id="userBio" class="bio-text">Generate to see stats</p>
             <div class="profile-meta">
-              <span id="userCompany" class="meta-item"><span class="icon">🏢</span></span>
-              <span id="userLocation" class="meta-item"><span class="icon">📍</span></span>
-              <span id="userTwitter" class="meta-item"><span class="icon">🐦</span></span>
+              <span id="userCompany" class="meta-item">🏢 Loading...</span>
+              <span id="userLocation" class="meta-item">📍 Loading...</span>
+              <span id="userTwitter" class="meta-item">🐦 Loading...</span>
             </div>
           </div>
         </div>
         <div class="achievements">
           <div class="achievement-item">
             <div class="achievement-icon">⭐</div>
-            <span id="totalStars">0</span> Stars earned
+            <span id="totalStars">0</span> Stars
           </div>
           <div class="achievement-item">
-            <div class="achievement-icon">📊</div>
+            <div class="achievement-icon">💾</div>
             <span id="totalCommits">0</span> Commits
           </div>
           <div class="achievement-item">
-            <div class="achievement-icon">👥</div>
-            <span id="totalPRs">0</span> PRs merged
+            <div class="achievement-icon">🔀</div>
+            <span id="totalPRs">0</span> PRs
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" data-index="2" data-theme="pink">
+    <!-- Slide 3: Stats -->
+    <section class="slide" data-index="2">
       <div class="slide-inner">
-        <h2 class="slide-title">2025 in Numbers</h2>
-        <div id="statsGrid" class="stats-grid enhanced"></div>
-        <div class="contribution-graph" id="contribGraph">
-          <div class="graph-line"></div>
-          <div class="graph-line"></div>
-          <div class="graph-line"></div>
-          <div class="graph-line"></div>
-        </div>
+        <h2 class="slide-title">2025 Stats</h2>
+        <div id="statsGrid" class="stats-grid"></div>
       </div>
     </section>
 
-    <section class="slide" data-index="3" data-theme="emerald">
+    <!-- Slide 4: Languages -->
+    <section class="slide" data-index="3">
       <div class="slide-inner">
         <h2 class="slide-title">Top Languages</h2>
-        <div id="languageBars" class="language-bars radial"></div>
+        <div id="languageBars" class="language-bars"></div>
       </div>
     </section>
 
-    <section class="slide" data-index="4" data-theme="amber">
+    <!-- Slide 5: Repos -->
+    <section class="slide" data-index="4">
       <div class="slide-inner">
-        <h2 class="slide-title">Star Repositories</h2>
-        <div id="repoGrid" class="repo-grid glass"></div>
+        <h2 class="slide-title">Top Repos</h2>
+        <div id="repoGrid" class="repo-grid"></div>
       </div>
     </section>
 
-    <!-- Replace the heatmap section in HTML (slide data-index="5") -->
-<section class="slide" data-index="5" data-theme="cyan">
-  <div class="slide-inner">
-    <h2 class="slide-title">2025 Contributions</h2>
-    <div id="heatmap" class="heatmap-container">
-      <div class="heatmap-header">
-        <span id="totalContributions">0</span> contributions in 2025
-        <span class="heatmap-legend">
-          <span class="legend-dot empty"></span>No
-          <span class="legend-dot low"></span>1-9
-          <span class="legend-dot med"></span>10-19
-          <span class="legend-dot high"></span>20+
-        </span>
-      </div>
-      <div id="heatmapGrid" class="heatmap-grid"></div>
-    </div>
-    <div class="contribution-stats">
-      <div class="stat-card small">
-        <div class="stat-value" id="bestStreak">0</div>
-        <div class="stat-label">Longest Streak</div>
-      </div>
-      <div class="stat-card small">
-        <div class="stat-value" id="totalDays">0</div>
-        <div class="stat-label">Active Days</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <section class="slide" data-index="6" data-theme="violet">
+    <!-- Slide 6: Heatmap -->
+    <section class="slide" data-index="5">
       <div class="slide-inner">
-        <h2 class="slide-title">Your Developer Persona</h2>
-        <div class="persona-card">
-          <h3 id="personaTitle" class="persona-type">Code Alchemist</h3>
-          <p id="personaDesc" class="persona-desc">You transform ideas into magical applications. Master of multiple languages with a knack for clean, elegant solutions.</p>
-          <div class="persona-stats">
-            <span>⚡ <strong>Speed:</strong> 92%</span>
-            <span>🎯 <strong>Precision:</strong> 87%</span>
-            <span>✨ <strong>Creativity:</strong> 95%</span>
+        <h2 class="slide-title">Contributions 2025</h2>
+        <div id="heatmap" class="heatmap-container">
+          <div class="heatmap-header">
+            <span id="totalContributions">0</span> total
+            <span class="heatmap-legend">
+              <span class="legend-dot empty"></span>
+              <span class="legend-dot low"></span>
+              <span class="legend-dot med"></span>
+              <span class="legend-dot high"></span>
+            </span>
+          </div>
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+        </div>
+        <div class="contribution-stats">
+          <div class="stat-card small">
+            <div class="stat-value" id="bestStreak">0</div>
+            <div class="stat-label">Best Streak</div>
+          </div>
+          <div class="stat-card small">
+            <div class="stat-value" id="totalDays">0</div>
+            <div class="stat-label">Active Days</div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" data-index="7" data-theme="rose">
+    <!-- Slide 7: Persona -->
+    <section class="slide" data-index="6">
+      <div class="slide-inner">
+        <h2 class="slide-title">Your Persona</h2>
+        <div class="persona-card">
+          <h3 id="personaTitle" class="persona-type">Code Wizard</h3>
+          <p id="personaDesc" class="persona-desc">Master of code, creates magic daily</p>
+          <div class="persona-stats">
+            <span>⚡ Speed: 92%</span>
+            <span>🎯 Precision: 87%</span>
+            <span>✨ Creativity: 95%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Final Score -->
+    <section class="slide" data-index="7">
       <div class="slide-inner">
         <h2 class="slide-title">Final Score</h2>
         <div class="score-ring">
           <svg viewBox="0 0 200 200" class="score-svg">
             <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
-            <circle id="scoreRing" cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="534"/>
+            <circle id="scoreRing" cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="10" stroke-dasharray="534" stroke-dashoffset="534"/>
           </svg>
-          <div id="finalScore" class="score-text">92/100</div>
+          <div id="finalScore" class="score-text">0/100</div>
         </div>
         <div class="share-section">
-          <button id="shareBtn" class="share-btn gradient-btn glow-hover">📱 Copy Wrapped Link</button>
-          <button id="twitterBtn" class="share-btn secondary-btn">🐦 Tweet My Wrapped</button>
-          <p class="share-hint">Share your 2025 coding journey with the world!</p>
+          <button id="shareBtn" class="share-btn gradient-btn">📱 Copy Summary</button>
+          <button id="twitterBtn" class="share-btn secondary-btn">🐦 Share on X</button>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Enhanced Loader -->
+  <!-- Loader -->
   <div class="loader" id="loader">
-    <div class="loader-particles">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-    </div>
     <div class="loader-spinner"></div>
-    <span id="loaderText">Fetching your Wrapped...</span>
+    <span id="loaderText">Loading...</span>
   </div>
 
-  <script src="js/app.js"></script>
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>
