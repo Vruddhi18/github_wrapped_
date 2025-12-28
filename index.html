@@ -2,26 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GitHub Wrapped 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Wrapped 2025</title>
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="particles"></div>
 
-  <!-- PROGRESS RING -->
+  <!-- PROGRESS TOP LEFT -->
   <div class="progress-container">
-    <div class="progress-ring">
-      <svg viewBox="0 0 36 36">
-        <path class="progress-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-        <path id="progressArc" class="progress-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-      </svg>
-      <div id="progressText">01/08</div>
-    </div>
+    <svg viewBox="0 0 36 36" class="progress-ring">
+      <path class="progress-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+      <path id="progressArc" class="progress-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+      <text id="progressText" x="18" y="21" text-anchor="middle" font-size="6" font-weight="600" fill="#fff">01</text>
+    </svg>
   </div>
 
-  <!-- MOBILE NAV DOTS + SWIPE ZONE -->
+  <!-- MOBILE DOTS RIGHT -->
   <div class="nav-dots">
     <span class="nav-dot active" data-slide="0"></span>
     <span class="nav-dot" data-slide="1"></span>
@@ -34,115 +32,43 @@
   </div>
 
   <main class="slider">
-    <!-- SLIDE 0: HERO -->
+    <!-- SLIDE 0: HERO (git-wrapped style) -->
     <section class="slide active" data-slide="0">
-      <div class="content">
-        <div class="hero-badge">2025</div>
-        <h1 class="hero-title">GitHub<span>Wrapped</span></h1>
-        <p class="hero-desc">Your year in code</p>
-        <div class="input-section">
-          <div class="input-group">
-            <input type="text" id="username" placeholder="Enter GitHub username (e.g. vrudhisah)" autocomplete="off">
-            <button id="generateBtn" class="generate-btn" disabled>Generate</button>
-          </div>
-          <div class="input-hint">Try: vrudhisah, torvalds, sindresorhus</div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-year">2025</span>
+          <br>GitHub Wrapped
+        </h1>
+        <p class="hero-subtitle">Your year in code</p>
+        
+        <div class="input-container">
+          <input type="text" id="username" placeholder="github.com/" class="username-input">
+          <button id="generateBtn" class="generate-btn" disabled>Generate</button>
         </div>
+
         <div class="trending-section">
-          <div class="trending-header">
-            <h3>🔥 Trending Repos</h3>
-            <div class="filter-tabs">
-              <button class="filter-btn active" data-filter="all">All</button>
-              <button class="filter-btn" data-filter="javascript">JS</button>
-              <button class="filter-btn" data-filter="python">Python</button>
-              <button class="filter-btn" data-filter="rust">Rust</button>
-            </div>
-          </div>
-          <div id="trendingRepos" class="trending-grid"></div>
+          <h3 class="section-title">Popular profiles</h3>
+          <div id="trendingProfiles" class="profiles-grid"></div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 1: PROFILE -->
-    <section class="slide" data-slide="1">
-      <div class="content">
-        <div class="profile-card" id="profileSlide">
-          <div>Loading your profile...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 2: STATS OVERVIEW -->
-    <section class="slide" data-slide="2">
-      <div class="content">
-        <h2 class="slide-title" id="statsTitle">2025 in Numbers</h2>
-        <div id="statsGrid" class="stats-grid">
-          <div class="stat-card">Loading stats...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 3: TOP LANGUAGES -->
-    <section class="slide" data-slide="3">
-      <div class="content">
-        <h2 class="slide-title">All Languages</h2>
-        <div id="languageBars" class="languages-container">
-          Loading languages...
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 4: TOP REPOS (LIFETIME) -->
-    <section class="slide" data-slide="4">
-      <div class="content">
-        <h2 class="slide-title">Lifetime Top Repos</h2>
-        <div id="repoGrid" class="repos-grid">
-          Loading repos...
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 5: HEATMAP -->
-    <section class="slide heatmap-slide" data-slide="5">
-      <div class="content">
-        <h2 class="slide-title">Contributions 2025</h2>
-        <div class="heatmap-container">
-          <div class="heatmap-header">
-            <span id="totalContributions">0</span> contributions
-          </div>
-          <div id="heatmapGrid" class="heatmap-grid"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 6: PERSONA -->
-    <section class="slide" data-slide="6">
-      <div class="content">
-        <h2 class="slide-title">Your Developer Type</h2>
-        <div id="personaCard" class="persona-card">
-          Loading persona...
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 7: FINAL SCORE -->
-    <section class="slide" data-slide="7">
-      <div class="content">
-        <h2 class="slide-title">Final Score</h2>
-        <div id="scoreContainer" class="score-container">
-          Loading score...
-        </div>
-      </div>
-    </section>
+    <!-- ALL 8 SLIDES WITH git-wrapped STYLING -->
+    <section class="slide" data-slide="1"><div class="slide-content" id="slide1"></div></section>
+    <section class="slide" data-slide="2"><div class="slide-content" id="slide2"></div></section>
+    <section class="slide" data-slide="3"><div class="slide-content" id="slide3"></div></section>
+    <section class="slide" data-slide="4"><div class="slide-content" id="slide4"></div></section>
+    <section class="slide" data-slide="5"><div class="slide-content" id="slide5"></div></section>
+    <section class="slide" data-slide="6"><div class="slide-content" id="slide6"></div></section>
+    <section class="slide" data-slide="7"><div class="slide-content" id="slide7"></div></section>
   </main>
 
   <div id="loader" class="loader">
     <div class="loader-spinner"></div>
-    <div id="loaderText">Loading...</div>
+    <p id="loaderText">Analyzing contributions...</p>
   </div>
 
   <div id="toast" class="toast"></div>
-  <div id="arrowHint" class="arrow-hint">👈 Arrow Keys / Tap Dots / Swipe</div>
-
   <script src="js/app.js"></script>
 </body>
 </html>
