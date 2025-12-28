@@ -1,4 +1,4 @@
-// BULLETPROOF APP - NO ERRORS POSSIBLE
+// BULLETPROOF APP - defensive checks added
 class GitHubWrapped {
   constructor() {
     this.initSafe();
@@ -112,7 +112,7 @@ class GitHubWrapped {
     if (ring && text) {
       const max = 327;
       const ratio = this.current / (this.total - 1);
-      ring.style.strokeDashoffset = max - ratio * max;
+      ring.style.strokeDashoffset = String(max - ratio * max);
       text.textContent = `${(this.current + 1).toString().padStart(2, '0')}/${this.total.toString().padStart(2, '0')}`;
     }
   }
@@ -200,16 +200,25 @@ class GitHubWrapped {
 
   renderProfile() {
     const u = this.data.user;
-    document.getElementById('userAvatar').src = u.avatar_url;
-    document.getElementById('userName').textContent = u.name || u.login;
-    document.getElementById('userBio').textContent = u.bio || 'No bio';
-    document.getElementById('userCompany').innerHTML = `🏢 ${u.company || 'Independent'}`;
-    document.getElementById('userLocation').innerHTML = `📍 ${u.location || 'Worldwide'}`;
-    document.getElementById('userTwitter').innerHTML = `🐦 ${u.twitter_username ? `@${u.twitter_username}` : 'None'}`;
+    const avatar = document.getElementById('userAvatar');
+    if (avatar && u.avatar_url) avatar.src = u.avatar_url;
+    const nameEl = document.getElementById('userName');
+    if (nameEl) nameEl.textContent = u.name || u.login;
+    const bioEl = document.getElementById('userBio');
+    if (bioEl) bioEl.textContent = u.bio || 'No bio';
+    const comp = document.getElementById('userCompany');
+    if (comp) comp.innerHTML = `🏢 ${u.company || 'Independent'}`;
+    const loc = document.getElementById('userLocation');
+    if (loc) loc.innerHTML = `📍 ${u.location || 'Worldwide'}`;
+    const tw = document.getElementById('userTwitter');
+    if (tw) tw.innerHTML = `🐦 ${u.twitter_username ? `@${u.twitter_username}` : 'None'}`;
     
-    document.getElementById('totalStars').textContent = this.data.stats.stars.toLocaleString();
-    document.getElementById('totalCommits').textContent = (this.data.stats.contributions * 0.7).toLocaleString();
-    document.getElementById('totalPRs').textContent = (this.data.stats.contributions * 0.15).toLocaleString();
+    const starsEl = document.getElementById('totalStars');
+    if (starsEl) starsEl.textContent = this.data.stats.stars.toLocaleString();
+    const commitsEl = document.getElementById('totalCommits');
+    if (commitsEl) commitsEl.textContent = Math.round(this.data.stats.contributions * 0.7).toLocaleString();
+    const prsEl = document.getElementById('totalPRs');
+    if (prsEl) prsEl.textContent = Math.round(this.data.stats.contributions * 0.15).toLocaleString();
   }
 
   renderStats() {
@@ -226,7 +235,8 @@ class GitHubWrapped {
 
   renderLanguages() {
     const root = document.getElementById('languageBars');
-    if (!root || !this.data.langs.length) {
+    if (!root) return;
+    if (!this.data.langs || !this.data.langs.length) {
       root.innerHTML = '<p style="color: var(--muted);">No languages</p>';
       return;
     }
@@ -255,21 +265,23 @@ class GitHubWrapped {
     `).join('') : '<div class="stat-card"><p style="color: var(--muted);">No popular repos</p></div>';
     
     root.onclick = (e) => {
-      const card = e.target.closest('.repo-card');
-      if (card?.dataset.url) window.open(card.dataset.url, '_blank');
+      const card = e.target.closest?.('.repo-card');
+      if (card?.dataset?.url) window.open(card.dataset.url, '_blank');
     };
   }
 
   renderHeatmap() {
     const h = this.data.heatmap;
-    document.getElementById('totalContributions').textContent = h.total;
-    document.getElementById('bestStreak').textContent = Math.floor(Math.random() * 45) + 15;
-    document.getElementById('totalDays').textContent = Math.floor(h.total / 3);
+    const totalEl = document.getElementById('totalContributions');
+    if (totalEl) totalEl.textContent = h.total;
+    const bestEl = document.getElementById('bestStreak');
+    if (bestEl) bestEl.textContent = Math.floor(Math.random() * 45) + 15;
+    const daysEl = document.getElementById('totalDays');
+    if (daysEl) daysEl.textContent = Math.floor(h.total / 3);
 
     const grid = document.getElementById('heatmapGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    // ✅ FIXED: Safe array check
     if (h.weeks && Array.isArray(h.weeks)) {
       h.weeks.forEach(week => {
         if (week.days && Array.isArray(week.days)) {
@@ -286,21 +298,30 @@ class GitHubWrapped {
 
   renderPersona() {
     const personas = ['Code Wizard ✨', 'UI Master 🎨', 'Dev Ninja ⚡'];
-    document.getElementById('personaTitle').textContent = personas[Math.floor(Math.random() * 3)];
+    const titleEl = document.getElementById('personaTitle');
+    if (titleEl) titleEl.textContent = personas[Math.floor(Math.random() * 3)];
   }
 
   renderScore() {
     const score = this.data.stats.score;
-    document.getElementById('finalScore').innerHTML = `${score}/100`;
-    document.getElementById('scoreRing').style.strokeDashoffset = 534 - (score / 100) * 534;
+    const finalEl = document.getElementById('finalScore');
+    if (finalEl) finalEl.innerHTML = `${score}/100`;
+    const ring = document.getElementById('scoreRing');
+    if (ring) ring.style.strokeDashoffset = String(534 - (score / 100) * 534);
 
-    document.getElementById('shareBtn').onclick = () => {
-      navigator.clipboard.writeText(`GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
-      this.showToast('Copied to clipboard! 📋');
-    };
-    document.getElementById('twitterBtn').onclick = () => {
-      window.open(`https://twitter.com/intent/tweet?text=GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
-    };
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+      shareBtn.onclick = () => {
+        navigator.clipboard.writeText(`GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
+        this.showToast('Copied to clipboard! 📋');
+      };
+    }
+    const twitterBtn = document.getElementById('twitterBtn');
+    if (twitterBtn) {
+      twitterBtn.onclick = () => {
+        window.open(`https://twitter.com/intent/tweet?text=GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
+      };
+    }
   }
 
   getLangColor(lang) {
@@ -308,7 +329,7 @@ class GitHubWrapped {
     return colors[lang] || `hsl(${Math.random()*360}, 70%, 55%)`;
   }
 
-  getHeatClass(count) {  // ✅ Fixed method name (was getHeatClass)
+  getHeatClass(count) {
     if (count === 0) return 'empty';
     if (count < 10) return 'low';
     if (count < 20) return 'med';
@@ -324,6 +345,7 @@ class GitHubWrapped {
 
   showToast(message) {
     const toast = document.getElementById('toast');
+    if (!toast) return;
     toast.textContent = message;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2500);
