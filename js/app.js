@@ -22,23 +22,96 @@ class GitHubWrapped {
   }
 
   safeInit() {
-    try {
-      this.slides = Array.from(document.querySelectorAll('.slide'));
-      this.total = this.slides.length;
-      if (this.total === 0) return;
+  try {
+    this.slides = Array.from(document.querySelectorAll('.slide'));
+    this.total = this.slides.length;
+    if (this.total === 0) return;
 
-      this.createParticles();
-      this.createNavDots();
-      this.initControls();
-      this.initInput();
-      this.updateProgress();
-      
-      // Set initial active slide
-      this.goTo(0);
-    } catch(e) {
-      console.error('GitHub Wrapped init error:', e);
-    }
+    this.loadTopRepos(); // NEW: Load trending repos
+    this.createParticles();
+    this.createNavDots();
+    this.initControls();
+    this.initInput();
+    this.updateProgress();
+    
+    this.goTo(0);
+  } catch(e) {
+    console.error('Init error:', e);
   }
+}
+
+// NEW: Load real top repos from GitHub API
+async loadTopRepos() {
+  const grid = document.getElementById('topReposGrid');
+  if (!grid) return;
+
+  try {
+    // Fetch top repos by language using GitHub Search API
+    const languages = ['stars:>10000 language:javascript', 'stars:>5000 language:python', 
+                      'stars:>2000 language:rust', 'stars:>3000 language:go', 
+                      'stars:>10000', 'stars:>8000 language:typescript'];
+    
+    const results = [];
+    for (const query of languages.slice(0, 3)) { // Rate limit safe
+      const response = await fetch(`https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=5`);
+      const data = await response.json();
+      if (data.items) results.push(...data.items.slice(0, 3));
+    }
+
+    // Dedupe and sort
+    const topRepos = results
+      .filter((repo, i, arr) => arr.findIndex(r => r.id === repo.id) === i)
+      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .slice(0, 10);
+
+    grid.innerHTML = topRepos.map(repo => `
+      <div class="top-repo-card" data-url="${repo.html_url}">
+        <div class="repo-lang-badge" style="background: ${this.getLangColor(repo.language)}">
+          ${repo.language || 'Unknown'}
+        </div>
+        <div class="repo-header">
+          <img src="${repo.owner.avatar_url}" class="owner-avatar" alt="${repo.owner.login}">
+          <div>
+            <div style="font-weight: 700; margin-bottom: 0.2rem;">${repo.name}</div>
+            <div style="font-size: 0.85rem; color: var(--muted);">${repo.owner.login}</div>
+          </div>
+        </div>
+        <p style="color: var(--text); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+          ${repo.description || 'No description'}
+        </p>
+        <div style="display: flex; gap: 1.5rem; font-size: 0.9rem;">
+          <span>⭐ ${repo.stargazers_count.toLocaleString()}</span>
+          <span>🍴 ${repo.forks_count.toLocaleString()}</span>
+        </div>
+      </div>
+    `).join('');
+
+    // Click handler for repo cards
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.top-repo-card');
+      if (card && card.dataset.url) {
+        window.open(card.dataset.url, '_blank');
+      }
+    });
+
+  } catch (error) {
+    grid.innerHTML = '<div class="loading-skeleton">Trending repos will load shortly...</div>';
+    console.error('Top repos error:', error);
+  }
+}
+
+// NEW: Language tabs
+initTopReposTabs() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      // Could filter repos by language here
+    });
+  });
+}
+
 
   createParticles() {
     const container = document.getElementById('particles');
