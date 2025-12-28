@@ -3,207 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <title>GitHub Wrapped 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="particles" id="particles"></div>
+  <!-- Floating particles -->
+  <div class="particles"></div>
 
-  <div class="progress">
-    <svg viewBox="0 0 120 120" class="progress-ring">
-      <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#6366f1"/>
-          <stop offset="100%" stop-color="#8b5cf6"/>
-        </linearGradient>
-      </defs>
-      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
-      <circle id="progressRing" cx="60" cy="60" r="52" fill="none" stroke="url(#grad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"/>
-    </svg>
-    <div id="progressText" class="progress-text">01/08</div>
+  <!-- Progress indicator -->
+  <div class="progress-container">
+    <div class="progress-ring">
+      <svg viewBox="0 0 36 36">
+        <path class="progress-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+        <path id="progressArc" class="progress-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-dasharray="100" stroke-dashoffset="100"/>
+      </svg>
+      <div class="progress-text" id="progressText">01/08</div>
+    </div>
   </div>
 
-  <div class="nav-dots" id="navDots"></div>
-  <button class="arrow arrow-left" id="prevBtn">◀</button>
-  <button class="arrow arrow-right" id="nextBtn">▶</button>
-
-  <main class="slider" id="slider">
-    <!-- HERO HOMEPAGE -->
-    <section class="slide active" data-index="0">
-      <div class="slide-inner hero-home">
-        <div class="orbit-particles">
-          <div class="orbit-ring"></div>
-          <div class="orbit-ring orbit-delay-1"></div>
-          <div class="orbit-ring orbit-delay-2"></div>
-        </div>
-        
-        <div class="badge neon-glow">🌌 2025 GitHub Wrapped</div>
-        <h1 class="hero-title neon-text">
-          <span>Your</span>
-          <span>Code</span>
-          <span>Universe</span>
+  <!-- Slides -->
+  <main class="slider">
+    <!-- HERO SCREEN -->
+    <section class="slide active" data-slide="0">
+      <div class="content">
+        <div class="hero-badge">2025</div>
+        <h1 class="hero-title">
+          GitHub
+          <span>Wrapped</span>
         </h1>
-        <p class="hero-subtitle pulse-glow">Discover your year in code. Explore top projects first ✨</p>
+        <p class="hero-desc">Your year in code</p>
         
-        <div class="input-container" id="inputContainer">
-          <div class="input-wrapper">
-            <input id="username" type="text" placeholder="torvalds, sindresorhus..." autocomplete="off">
-            <div class="input-glow"></div>
+        <!-- Input Section -->
+        <div class="input-section">
+          <div class="input-group">
+            <input type="text" id="username" placeholder="Enter GitHub username..." autocomplete="off">
+            <button id="generateBtn" class="generate-btn" disabled>
+              <span>Generate</span>
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </button>
           </div>
-          <button id="generateBtn" class="gradient-btn neon-btn" disabled>
-            <span>Launch Wrapped</span>
-            <svg class="btn-rocket" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
         </div>
-        
-        <div class="repos-section">
-          <div class="section-header">
-            <h3 class="section-title">⭐ Trending Repositories</h3>
-            <div class="filter-tabs" id="filterTabs">
-              <button class="filter-tab active" data-lang="all"><span>All</span></button>
-              <button class="filter-tab" data-lang="javascript"><span>JS</span></button>
-              <button class="filter-tab" data-lang="python"><span>🐍 Python</span></button>
-              <button class="filter-tab" data-lang="rust"><span>🦀 Rust</span></button>
-              <button class="filter-tab" data-lang="go"><span>🐹 Go</span></button>
-              <button class="filter-tab" data-lang="typescript"><span>TS</span></button>
+
+        <!-- Trending Repos Preview -->
+        <div class="trending-preview">
+          <div class="trending-header">
+            <h3>🔥 Trending Now</h3>
+            <div class="filter-tabs">
+              <button class="tab active" data-filter="all">All</button>
+              <button class="tab" data-filter="javascript">JS</button>
+              <button class="tab" data-filter="python">Python</button>
+              <button class="tab" data-filter="rust">Rust</button>
             </div>
           </div>
-          <div id="topReposGrid" class="top-repos-grid">
-            <div class="repo-skeleton"></div>
-            <div class="repo-skeleton"></div>
-            <div class="repo-skeleton"></div>
+          <div id="trendingRepos" class="trending-grid">
+            <!-- Loaded by JS -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Profile Slide -->
-    <section class="slide" data-index="1">
-      <div class="slide-inner">
-        <div class="profile-header">
-          <img id="userAvatar" class="avatar" src="" alt="Avatar">
-          <div class="profile-info">
-            <h2 id="userName" class="slide-title">Your Profile</h2>
-            <p id="userBio" class="bio-text">Generate to see stats</p>
-            <div class="profile-meta">
-              <span id="userCompany" class="meta-item">🏢 Loading...</span>
-              <span id="userLocation" class="meta-item">📍 Loading...</span>
-              <span id="userTwitter" class="meta-item">🐦 Loading...</span>
+    <!-- Profile Screen -->
+    <section class="slide" data-slide="1">
+      <div class="content profile-content">
+        <div class="profile-card">
+          <div class="profile-header">
+            <img id="userAvatar" class="avatar" src="" alt="">
+            <div class="profile-info">
+              <h2 id="userName" class="profile-name">Your Profile</h2>
+              <p id="userBio" class="profile-bio">Generate to see your stats</p>
             </div>
           </div>
-        </div>
-        <div class="achievements">
-          <div class="achievement-item">
-            <div class="achievement-icon">⭐</div>
-            <span id="totalStars">0</span> Stars
-          </div>
-          <div class="achievement-item">
-            <div class="achievement-icon">💾</div>
-            <span id="totalCommits">0</span> Commits
-          </div>
-          <div class="achievement-item">
-            <div class="achievement-icon">🔀</div>
-            <span id="totalPRs">0</span> PRs
+          <div class="profile-stats">
+            <div class="stat-item">
+              <div class="stat-icon">⭐</div>
+              <div><span id="totalStars">0</span> Stars</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">💾</div>
+              <div><span id="totalCommits">0</span> Commits</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">🔀</div>
+              <div><span id="totalPRs">0</span> PRs</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Slide -->
-    <section class="slide" data-index="2">
-      <div class="slide-inner">
-        <h2 class="slide-title">2025 Stats</h2>
+    <!-- Stats Overview -->
+    <section class="slide stats-slide" data-slide="2">
+      <div class="content">
+        <h2 class="slide-title">2025 in Numbers</h2>
         <div id="statsGrid" class="stats-grid"></div>
       </div>
     </section>
 
-    <!-- Languages Slide -->
-    <section class="slide" data-index="3">
-      <div class="slide-inner">
+    <!-- Languages -->
+    <section class="slide" data-slide="3">
+      <div class="content">
         <h2 class="slide-title">Top Languages</h2>
-        <div id="languageBars" class="language-bars"></div>
+        <div id="languageBars" class="languages-container"></div>
       </div>
     </section>
 
-    <!-- Repos Slide -->
-    <section class="slide" data-index="4">
-      <div class="slide-inner">
-        <h2 class="slide-title">Top Repos</h2>
-        <div id="repoGrid" class="repo-grid"></div>
+    <!-- Top Repos -->
+    <section class="slide" data-slide="4">
+      <div class="content">
+        <h2 class="slide-title">Top Repositories</h2>
+        <div id="repoGrid" class="repos-grid"></div>
       </div>
     </section>
 
-    <!-- Heatmap Slide -->
-    <section class="slide" data-index="5">
-      <div class="slide-inner">
+    <!-- Contribution Heatmap -->
+    <section class="slide heatmap-slide" data-slide="5">
+      <div class="content">
         <h2 class="slide-title">Contributions 2025</h2>
-        <div id="heatmap" class="heatmap-container">
+        <div class="heatmap-container">
           <div class="heatmap-header">
-            <span id="totalContributions">0</span> total
-            <span class="heatmap-legend">
-              <span class="legend-dot empty"></span>
-              <span class="legend-dot low"></span>
-              <span class="legend-dot med"></span>
-              <span class="legend-dot high"></span>
-            </span>
+            <span id="totalContributions">0</span> contributions
           </div>
           <div id="heatmapGrid" class="heatmap-grid"></div>
         </div>
-        <div class="contribution-stats">
-          <div class="stat-card small">
-            <div class="stat-value" id="bestStreak">0</div>
-            <div class="stat-label">Best Streak</div>
+        <div class="heatmap-stats">
+          <div class="stat-card">
+            <div id="bestStreak" class="stat-number">0</div>
+            <div>Best Streak</div>
           </div>
-          <div class="stat-card small">
-            <div class="stat-value" id="totalDays">0</div>
-            <div class="stat-label">Active Days</div>
+          <div class="stat-card">
+            <div id="totalDays" class="stat-number">0</div>
+            <div>Active Days</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Persona Slide -->
-    <section class="slide" data-index="6">
-      <div class="slide-inner">
-        <h2 class="slide-title">Your Persona</h2>
+    <!-- Developer Persona -->
+    <section class="slide persona-slide" data-slide="6">
+      <div class="content">
+        <h2 class="slide-title">Your Developer Type</h2>
         <div class="persona-card">
-          <h3 id="personaTitle" class="persona-type">Code Wizard</h3>
-          <p id="personaDesc" class="persona-desc">Master of code, creates magic daily</p>
-          <div class="persona-stats">
-            <span>⚡ Speed: 92%</span>
-            <span>🎯 Precision: 87%</span>
-            <span>✨ Creativity: 95%</span>
+          <h3 id="personaTitle" class="persona-title">Code Wizard</h3>
+          <p id="personaDesc" class="persona-desc">Master of clean code and algorithms</p>
+          <div class="persona-traits">
+            <span>⚡ Speed: <strong>92%</strong></span>
+            <span>🎯 Precision: <strong>87%</strong></span>
+            <span>✨ Creativity: <strong>95%</strong></span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Final Score Slide -->
-    <section class="slide" data-index="7">
-      <div class="slide-inner">
-        <h2 class="slide-title">Final Score</h2>
-        <div class="score-ring">
-          <svg viewBox="0 0 200 200" class="score-svg">
-            <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
-            <circle id="scoreRing" cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="10" stroke-dasharray="534" stroke-dashoffset="534"/>
-          </svg>
-          <div id="finalScore" class="score-text">0/100</div>
+    <!-- Final Score -->
+    <section class="slide final-score-slide" data-slide="7">
+      <div class="content">
+        <h2 class="slide-title">Your Final Score</h2>
+        <div class="score-container">
+          <div class="score-circle">
+            <svg viewBox="0 0 160 160">
+              <circle class="score-bg" cx="80" cy="80" r="70"></circle>
+              <circle id="scoreRing" class="score-ring" cx="80" cy="80" r="70" stroke-dasharray="439.6" stroke-dashoffset="439.6"></circle>
+            </svg>
+            <div id="finalScore" class="score-text">0/100</div>
+          </div>
         </div>
-        <div class="share-section">
-          <button id="shareBtn" class="share-btn gradient-btn">📱 Copy Summary</button>
-          <button id="twitterBtn" class="share-btn secondary-btn">🐦 Share on X</button>
+        <div class="share-buttons">
+          <button id="shareBtn" class="share-btn primary">📱 Share Summary</button>
+          <button id="twitterBtn" class="share-btn secondary">🐦 Post to X</button>
         </div>
       </div>
     </section>
   </main>
 
-  <div class="loader" id="loader">
+  <!-- Loading Overlay -->
+  <div id="loader" class="loader">
     <div class="loader-spinner"></div>
-    <span id="loaderText">Loading...</span>
+    <div id="loaderText" class="loader-text">Loading...</div>
   </div>
 
+  <!-- Toast Notification -->
   <div id="toast" class="toast"></div>
 
   <script src="js/app.js"></script>
