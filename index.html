@@ -4,16 +4,13 @@
   <meta charset="UTF-8">
   <title>GitHub Wrapped 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- fixed path: use repository-relative file -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Particles Background -->
   <div class="particles" id="particles"></div>
 
-  <!-- Progress Ring -->
   <div class="progress">
     <svg viewBox="0 0 120 120" class="progress-ring">
       <defs>
@@ -28,72 +25,61 @@
     <div id="progressText" class="progress-text">01/08</div>
   </div>
 
-  <!-- Navigation Dots -->
   <div class="nav-dots" id="navDots"></div>
-
-  <!-- Controls -->
   <button class="arrow arrow-left" id="prevBtn">◀</button>
   <button class="arrow arrow-right" id="nextBtn">▶</button>
 
-  <!-- Slides -->
   <main class="slider" id="slider">
-    <!-- Slide 1: Welcome -->
-    <!-- Slide 0: Top Repos Homepage (NEW) -->
-<!-- Slide 0: Hero Homepage with Neon Orbit Theme -->
-<section class="slide active" data-index="0">
-  <div class="slide-inner hero-home">
-    <!-- Floating Orbit Particles -->
-    <div class="orbit-particles">
-      <div class="orbit-ring"></div>
-      <div class="orbit-ring orbit-delay-1"></div>
-      <div class="orbit-ring orbit-delay-2"></div>
-    </div>
-    
-    <div class="badge neon-glow">🌌 2025 GitHub Wrapped</div>
-    
-    <h1 class="hero-title neon-text">
-      <span>Your</span>
-      <span>Code</span>
-      <span>Universe</span>
-    </h1>
-    <p class="hero-subtitle pulse-glow">Discover your year in code. Explore top projects first ✨</p>
-    
-    <!-- Username Input - Hidden until typing -->
-    <div class="input-container" id="inputContainer">
-      <div class="input-wrapper">
-        <input id="username" type="text" placeholder="torvalds, sindresorhus..." autocomplete="off">
-        <div class="input-glow"></div>
-      </div>
-      <button id="generateBtn" class="gradient-btn neon-btn" disabled>
-        <span>Launch Wrapped</span>
-        <svg class="btn-rocket" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </button>
-    </div>
-    
-    <!-- Top Repos Section - Always Visible -->
-    <div class="repos-section">
-      <div class="section-header">
-        <h3 class="section-title">⭐ Trending Repositories</h3>
-        <div class="filter-tabs" id="filterTabs">
-          <button class="filter-tab active" data-lang="all"><span>All</span></button>
-          <button class="filter-tab" data-lang="javascript"><span>JS</span></button>
-          <button class="filter-tab" data-lang="python"><span>🐍 Python</span></button>
-          <button class="filter-tab" data-lang="rust"><span>🦀 Rust</span></button>
-          <button class="filter-tab" data-lang="go"><span>🐹 Go</span></button>
-          <button class="filter-tab" data-lang="typescript"><span>TS</span></button>
+    <!-- HERO HOMEPAGE -->
+    <section class="slide active" data-index="0">
+      <div class="slide-inner hero-home">
+        <div class="orbit-particles">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring orbit-delay-1"></div>
+          <div class="orbit-ring orbit-delay-2"></div>
+        </div>
+        
+        <div class="badge neon-glow">🌌 2025 GitHub Wrapped</div>
+        <h1 class="hero-title neon-text">
+          <span>Your</span>
+          <span>Code</span>
+          <span>Universe</span>
+        </h1>
+        <p class="hero-subtitle pulse-glow">Discover your year in code. Explore top projects first ✨</p>
+        
+        <div class="input-container" id="inputContainer">
+          <div class="input-wrapper">
+            <input id="username" type="text" placeholder="torvalds, sindresorhus..." autocomplete="off">
+            <div class="input-glow"></div>
+          </div>
+          <button id="generateBtn" class="gradient-btn neon-btn" disabled>
+            <span>Launch Wrapped</span>
+            <svg class="btn-rocket" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+        </div>
+        
+        <div class="repos-section">
+          <div class="section-header">
+            <h3 class="section-title">⭐ Trending Repositories</h3>
+            <div class="filter-tabs" id="filterTabs">
+              <button class="filter-tab active" data-lang="all"><span>All</span></button>
+              <button class="filter-tab" data-lang="javascript"><span>JS</span></button>
+              <button class="filter-tab" data-lang="python"><span>🐍 Python</span></button>
+              <button class="filter-tab" data-lang="rust"><span>🦀 Rust</span></button>
+              <button class="filter-tab" data-lang="go"><span>🐹 Go</span></button>
+              <button class="filter-tab" data-lang="typescript"><span>TS</span></button>
+            </div>
+          </div>
+          <div id="topReposGrid" class="top-repos-grid">
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+          </div>
         </div>
       </div>
-      <div id="topReposGrid" class="top-repos-grid">
-        <div class="repo-skeleton"></div>
-        <div class="repo-skeleton"></div>
-        <div class="repo-skeleton"></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-
-    <!-- Slide 2: Profile -->
+    <!-- Profile Slide -->
     <section class="slide" data-index="1">
       <div class="slide-inner">
         <div class="profile-header">
@@ -125,7 +111,7 @@
       </div>
     </section>
 
-    <!-- Slide 3: Stats -->
+    <!-- Stats Slide -->
     <section class="slide" data-index="2">
       <div class="slide-inner">
         <h2 class="slide-title">2025 Stats</h2>
@@ -133,7 +119,7 @@
       </div>
     </section>
 
-    <!-- Slide 4: Languages -->
+    <!-- Languages Slide -->
     <section class="slide" data-index="3">
       <div class="slide-inner">
         <h2 class="slide-title">Top Languages</h2>
@@ -141,7 +127,7 @@
       </div>
     </section>
 
-    <!-- Slide 5: Repos -->
+    <!-- Repos Slide -->
     <section class="slide" data-index="4">
       <div class="slide-inner">
         <h2 class="slide-title">Top Repos</h2>
@@ -149,7 +135,7 @@
       </div>
     </section>
 
-    <!-- Slide 6: Heatmap -->
+    <!-- Heatmap Slide -->
     <section class="slide" data-index="5">
       <div class="slide-inner">
         <h2 class="slide-title">Contributions 2025</h2>
@@ -178,7 +164,7 @@
       </div>
     </section>
 
-    <!-- Slide 7: Persona -->
+    <!-- Persona Slide -->
     <section class="slide" data-index="6">
       <div class="slide-inner">
         <h2 class="slide-title">Your Persona</h2>
@@ -194,7 +180,7 @@
       </div>
     </section>
 
-    <!-- Slide 8: Final Score -->
+    <!-- Final Score Slide -->
     <section class="slide" data-index="7">
       <div class="slide-inner">
         <h2 class="slide-title">Final Score</h2>
@@ -213,16 +199,13 @@
     </section>
   </main>
 
-  <!-- Loader -->
   <div class="loader" id="loader">
     <div class="loader-spinner"></div>
     <span id="loaderText">Loading...</span>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
-  <!-- fixed path: relative JS file -->
   <script src="js/app.js"></script>
 </body>
 </html>
