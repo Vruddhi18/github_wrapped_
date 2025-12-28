@@ -1,1 +1,12 @@
-{ "name": "dark-themed-animated-ui", "version": "1.0.0", "scripts": { "dev": "tailwindcss -i ./css/input.css -o ./css/styles.css --watch" }, "devDependencies": { "tailwindcss": "^3.4.0" } }
+{
+  "name": "dark-themed-animated-ui",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx http-server . -p 3000",
+    "dev": "tailwindcss -i ./css/input.css -o ./css/styles.css --watch",
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/styles.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
