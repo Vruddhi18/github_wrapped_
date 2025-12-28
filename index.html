@@ -10,6 +10,7 @@
 <body>
   <div class="particles"></div>
 
+  <!-- PROGRESS RING -->
   <div class="progress-container">
     <div class="progress-ring">
       <svg viewBox="0 0 36 36">
@@ -20,7 +21,7 @@
     </div>
   </div>
 
-  <!-- MOBILE NAV DOTS -->
+  <!-- MOBILE NAV DOTS + SWIPE ZONE -->
   <div class="nav-dots">
     <span class="nav-dot active" data-slide="0"></span>
     <span class="nav-dot" data-slide="1"></span>
@@ -33,22 +34,19 @@
   </div>
 
   <main class="slider">
-    <!-- SLIDE 0: HERO WITH FILTERS -->
+    <!-- SLIDE 0: HERO -->
     <section class="slide active" data-slide="0">
       <div class="content">
         <div class="hero-badge">2025</div>
         <h1 class="hero-title">GitHub<span>Wrapped</span></h1>
         <p class="hero-desc">Your year in code</p>
-        
         <div class="input-section">
           <div class="input-group">
-            <input type="text" id="username" placeholder="Enter your GitHub username..." autocomplete="off">
+            <input type="text" id="username" placeholder="Enter GitHub username (e.g. vrudhisah)" autocomplete="off">
             <button id="generateBtn" class="generate-btn" disabled>Generate</button>
           </div>
-          <div class="input-hint">Try: torvalds, sindresorhus, facebook</div>
+          <div class="input-hint">Try: vrudhisah, torvalds, sindresorhus</div>
         </div>
-
-        <!-- TRENDING WITH FILTERS - MOBILE FRIENDLY -->
         <div class="trending-section">
           <div class="trending-header">
             <h3>🔥 Trending Repos</h3>
@@ -64,14 +62,77 @@
       </div>
     </section>
 
-    <!-- OTHER SLIDES - EMPTY FOR DYNAMIC CONTENT -->
-    <section class="slide" data-slide="1"></section>
-    <section class="slide" data-slide="2"></section>
-    <section class="slide" data-slide="3"></section>
-    <section class="slide" data-slide="4"></section>
-    <section class="slide" data-slide="5"></section>
-    <section class="slide" data-slide="6"></section>
-    <section class="slide" data-slide="7"></section>
+    <!-- SLIDE 1: PROFILE -->
+    <section class="slide" data-slide="1">
+      <div class="content">
+        <div class="profile-card" id="profileSlide">
+          <div>Loading your profile...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: STATS OVERVIEW -->
+    <section class="slide" data-slide="2">
+      <div class="content">
+        <h2 class="slide-title" id="statsTitle">2025 in Numbers</h2>
+        <div id="statsGrid" class="stats-grid">
+          <div class="stat-card">Loading stats...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: TOP LANGUAGES -->
+    <section class="slide" data-slide="3">
+      <div class="content">
+        <h2 class="slide-title">All Languages</h2>
+        <div id="languageBars" class="languages-container">
+          Loading languages...
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: TOP REPOS (LIFETIME) -->
+    <section class="slide" data-slide="4">
+      <div class="content">
+        <h2 class="slide-title">Lifetime Top Repos</h2>
+        <div id="repoGrid" class="repos-grid">
+          Loading repos...
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: HEATMAP -->
+    <section class="slide heatmap-slide" data-slide="5">
+      <div class="content">
+        <h2 class="slide-title">Contributions 2025</h2>
+        <div class="heatmap-container">
+          <div class="heatmap-header">
+            <span id="totalContributions">0</span> contributions
+          </div>
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: PERSONA -->
+    <section class="slide" data-slide="6">
+      <div class="content">
+        <h2 class="slide-title">Your Developer Type</h2>
+        <div id="personaCard" class="persona-card">
+          Loading persona...
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: FINAL SCORE -->
+    <section class="slide" data-slide="7">
+      <div class="content">
+        <h2 class="slide-title">Final Score</h2>
+        <div id="scoreContainer" class="score-container">
+          Loading score...
+        </div>
+      </div>
+    </section>
   </main>
 
   <div id="loader" class="loader">
@@ -80,7 +141,7 @@
   </div>
 
   <div id="toast" class="toast"></div>
-  <div id="arrowHint" class="arrow-hint">👈 Arrow Keys / Tap Dots</div>
+  <div id="arrowHint" class="arrow-hint">👈 Arrow Keys / Tap Dots / Swipe</div>
 
   <script src="js/app.js"></script>
 </body>
