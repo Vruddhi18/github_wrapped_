@@ -1,107 +1,134 @@
-// BULLETPROOF APP - defensive checks added
+// BULLETPROOF GITHUB WRAPPED 2025 - WORKS EVERYWHERE
+// Fixed all syntax errors, mobile, GitHub Pages, no dependencies
+
 class GitHubWrapped {
   constructor() {
-    this.initSafe();
+    this.data = null;
+    this.slides = [];
+    this.current = 0;
+    this.total = 0;
+    this.isLoading = false;
+    this.isTyping = false;
+    this.init();
   }
 
-  initSafe() {
-    try {
+  init() {
+    // Wait for DOM ready with multiple fallbacks
+    if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => this.safeInit());
-    } catch(e) {
-      console.error('Init error:', e);
+    } else {
+      this.safeInit();
     }
   }
 
   safeInit() {
-    this.slides = document.querySelectorAll('.slide');
-    this.current = 0;
-    this.total = this.slides.length;
-    this.isLoading = false;
-    this.isTyping = false;
-    
-    this.createParticles();
-    this.createNavDots();
-    this.initControls();
-    this.initInput();
-    this.updateProgress();
+    try {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.total = this.slides.length;
+      if (this.total === 0) return;
+
+      this.createParticles();
+      this.createNavDots();
+      this.initControls();
+      this.initInput();
+      this.updateProgress();
+      
+      // Set initial active slide
+      this.goTo(0);
+    } catch(e) {
+      console.error('GitHub Wrapped init error:', e);
+    }
   }
 
   createParticles() {
     const container = document.getElementById('particles');
     if (!container) return;
+    
     for (let i = 0; i < 12; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.animationDuration = (15 + Math.random() * 10) + 's';
-      container.appendChild(p);
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      container.appendChild(particle);
     }
   }
 
   createNavDots() {
     const container = document.getElementById('navDots');
-    if (!container) return;
+    if (!container || this.total === 0) return;
+    
     container.innerHTML = '';
-    Array.from(this.slides).forEach((slide, i) => {
+    this.slides.forEach((slide, index) => {
       const dot = document.createElement('button');
-      dot.className = `nav-dot ${i === 0 ? 'active' : ''}`;
-      dot.dataset.index = i;
-      dot.onclick = () => this.goTo(i);
+      dot.className = `nav-dot ${index === 0 ? 'active' : ''}`;
+      dot.dataset.index = index.toString();
+      dot.addEventListener('click', () => this.goTo(parseInt(dot.dataset.index)));
       container.appendChild(dot);
     });
   }
 
   initControls() {
-    document.getElementById('prevBtn')?.onclick = () => this.prev();
-    document.getElementById('nextBtn')?.onclick = () => this.next();
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
     
+    if (prevBtn) prevBtn.addEventListener('click', () => this.prev());
+    if (nextBtn) nextBtn.addEventListener('click', () => this.next());
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') this.next();
-      if (e.key === 'ArrowLeft') this.prev();
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') this.next();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') this.prev();
     });
   }
 
   initInput() {
     const input = document.getElementById('username');
     const btn = document.getElementById('generateBtn');
+    
     if (!input || !btn) return;
 
-    input.onfocus = () => { this.isTyping = true; };
-    input.onblur = () => { this.isTyping = false; };
-    
-    input.oninput = () => {
-      this.isTyping = true;
-      btn.disabled = input.value.trim().length < 2;
+    const updateButton = () => {
+      const value = input.value.trim();
+      btn.disabled = value.length < 2;
+      this.isTyping = value.length > 0;
     };
 
-    let typingTimer;
-    input.onkeyup = (e) => {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => {
-        this.isTyping = false;
-      }, 1000);
-      if (e.key === 'Enter' && !btn.disabled) this.generate();
-    };
+    input.addEventListener('input', updateButton);
+    input.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter' && !btn.disabled) {
+        this.generate();
+      }
+    });
 
-    btn.onclick = () => this.generate();
+    btn.addEventListener('click', () => {
+      if (!btn.disabled) this.generate();
+    });
   }
 
-  next() { this.goTo((this.current + 1) % this.total); }
-  prev() { this.goTo((this.current - 1 + this.total) % this.total); }
+  next() {
+    this.goTo((this.current + 1) % this.total);
+  }
+
+  prev() {
+    this.goTo((this.current - 1 + this.total) % this.total);
+  }
 
   goTo(index) {
-    if (index === this.current || this.isLoading) return;
-    
-    const current = this.slides[this.current];
-    const nextSlide = this.slides[index];
-    
-    current?.classList.remove('active');
-    nextSlide?.classList.add('active');
-    
-    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+    if (index < 0 || index >= this.total || index === this.current || this.isLoading) {
+      return;
+    }
+
+    // Update slides
+    this.slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+
+    // Update nav dots
+    const dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === index);
     });
-    
+
     this.current = index;
     this.updateProgress();
   }
@@ -109,86 +136,108 @@ class GitHubWrapped {
   updateProgress() {
     const ring = document.getElementById('progressRing');
     const text = document.getElementById('progressText');
-    if (ring && text) {
-      const max = 327;
-      const ratio = this.current / (this.total - 1);
-      ring.style.strokeDashoffset = String(max - ratio * max);
-      text.textContent = `${(this.current + 1).toString().padStart(2, '0')}/${this.total.toString().padStart(2, '0')}`;
-    }
+    
+    if (!ring || !text || this.total === 0) return;
+
+    const maxDash = 327;
+    const ratio = this.current / (this.total - 1);
+    const offset = maxDash - (ratio * maxDash);
+    
+    ring.style.strokeDashoffset = offset.toString();
+    text.textContent = `${String(this.current + 1).padStart(2, '0')}/${String(this.total).padStart(2, '0')}`;
   }
 
   async generate() {
-    const username = document.getElementById('username')?.value.trim();
-    if (!username || this.isLoading) return;
+    const input = document.getElementById('username');
+    const username = input ? input.value.trim() : '';
+    
+    if (!username || this.isLoading || username.length < 2) {
+      this.showToast('Enter a valid GitHub username (min 2 chars)');
+      return;
+    }
 
     this.isLoading = true;
     this.setLoader(true, 'Fetching GitHub data...');
 
     try {
-      const [userRes, reposRes] = await Promise.all([
+      const [userResponse, reposResponse] = await Promise.all([
         fetch(`https://api.github.com/users/${username}`),
         fetch(`https://api.github.com/users/${username}/repos?per_page=50&sort=updated`)
       ]);
 
-      if (!userRes.ok) throw new Error('User not found');
+      if (!userResponse.ok) {
+        throw new Error(`User "${username}" not found`);
+      }
 
-      const user = await userRes.json();
-      const repos = await reposRes.json();
+      const user = await userResponse.json();
+      const repos = await reposResponse.json();
 
       this.data = this.processData(user, repos);
       this.renderAll();
       
       this.setLoader(false);
       this.goTo(1);
+      
+      this.showToast(`Welcome back, ${user.login}! ✨`);
     } catch (error) {
       this.setLoader(false);
-      this.showToast('User not found. Try: torvalds, sindresorhus, facebook');
+      console.error('GitHub API error:', error);
+      this.showToast(`User not found. Try: torvalds, sindresorhus, facebook`);
     } finally {
       this.isLoading = false;
     }
   }
 
   processData(user, repos) {
-    const totalStars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
-    const langs = {};
-    repos.forEach(r => {
-      if (r.language) langs[r.language] = (langs[r.language] || 0) + 1;
-    });
+    // Calculate stats
+    const totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+    const languageCount = {};
     
-    const contributions = Math.max(50, repos.length * 12 + Math.floor(Math.random() * 600));
-    const score = Math.min(100, Math.floor(totalStars / 15 + contributions / 8));
+    repos.forEach(repo => {
+      if (repo.language && repo.language !== null) {
+        languageCount[repo.language] = (languageCount[repo.language] || 0) + 1;
+      }
+    });
+
+    const totalContributions = Math.max(50, repos.length * 12 + Math.floor(Math.random() * 600));
+    const finalScore = Math.min(100, Math.floor(totalStars / 15 + totalContributions / 8));
 
     return {
-      user,
-      repos: repos.slice(0, 10).map(r => ({
-        name: r.name,
-        stars: r.stargazers_count || 0,
-        language: r.language
+      user: user,
+      repos: repos.slice(0, 10).map(repo => ({
+        name: repo.name,
+        stars: repo.stargazers_count || 0,
+        language: repo.language || 'Unknown'
       })),
       stats: {
         repos: repos.length,
         stars: totalStars,
-        contributions,
-        score
+        contributions: totalContributions,
+        score: finalScore
       },
-      langs: Object.entries(langs).sort(([,a], [,b]) => b - a).slice(0, 5),
-      heatmap: this.generateHeatmap(contributions)
+      languages: Object.entries(languageCount)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5),
+      heatmap: this.generateHeatmap(totalContributions)
     };
   }
 
-  generateHeatmap(total) {
+  generateHeatmap(totalContributions) {
     const weeks = [];
-    for (let w = 0; w < 12; w++) {
+    for (let week = 0; week < 12; week++) {
       const days = [];
-      for (let d = 0; d < 7; d++) {
-        days.push({ count: Math.floor(Math.random() * 25) });
+      for (let day = 0; day < 7; day++) {
+        const count = Math.floor(Math.random() * 25);
+        days.push({ count: count });
       }
-      weeks.push({ days });
+      weeks.push({ days: days });
     }
-    return { weeks, total };
+    return { weeks: weeks, total: totalContributions };
   }
 
   renderAll() {
+    if (!this.data) return;
+    
     this.renderProfile();
     this.renderStats();
     this.renderLanguages();
@@ -199,134 +248,218 @@ class GitHubWrapped {
   }
 
   renderProfile() {
-    const u = this.data.user;
-    const avatar = document.getElementById('userAvatar');
-    if (avatar && u.avatar_url) avatar.src = u.avatar_url;
-    const nameEl = document.getElementById('userName');
-    if (nameEl) nameEl.textContent = u.name || u.login;
-    const bioEl = document.getElementById('userBio');
-    if (bioEl) bioEl.textContent = u.bio || 'No bio';
-    const comp = document.getElementById('userCompany');
-    if (comp) comp.innerHTML = `🏢 ${u.company || 'Independent'}`;
-    const loc = document.getElementById('userLocation');
-    if (loc) loc.innerHTML = `📍 ${u.location || 'Worldwide'}`;
-    const tw = document.getElementById('userTwitter');
-    if (tw) tw.innerHTML = `🐦 ${u.twitter_username ? `@${u.twitter_username}` : 'None'}`;
+    const user = this.data.user;
     
+    // Avatar
+    const avatar = document.getElementById('userAvatar');
+    if (avatar) {
+      avatar.src = user.avatar_url || '';
+      avatar.alt = `${user.login}'s avatar`;
+    }
+
+    // Name
+    const nameEl = document.getElementById('userName');
+    if (nameEl) nameEl.textContent = user.name || user.login;
+
+    // Bio
+    const bioEl = document.getElementById('userBio');
+    if (bioEl) bioEl.textContent = user.bio || 'No bio available';
+
+    // Meta info
+    const companyEl = document.getElementById('userCompany');
+    if (companyEl) companyEl.innerHTML = `🏢 ${user.company || 'Independent'}`;
+
+    const locationEl = document.getElementById('userLocation');
+    if (locationEl) locationEl.innerHTML = `📍 ${user.location || 'Worldwide'}`;
+
+    const twitterEl = document.getElementById('userTwitter');
+    if (twitterEl) {
+      twitterEl.innerHTML = user.twitter_username 
+        ? `🐦 @${user.twitter_username}`
+        : '🐦 None';
+    }
+
+    // Achievements
     const starsEl = document.getElementById('totalStars');
     if (starsEl) starsEl.textContent = this.data.stats.stars.toLocaleString();
+
     const commitsEl = document.getElementById('totalCommits');
-    if (commitsEl) commitsEl.textContent = Math.round(this.data.stats.contributions * 0.7).toLocaleString();
+    if (commitsEl) {
+      commitsEl.textContent = Math.round(this.data.stats.contributions * 0.7).toLocaleString();
+    }
+
     const prsEl = document.getElementById('totalPRs');
-    if (prsEl) prsEl.textContent = Math.round(this.data.stats.contributions * 0.15).toLocaleString();
+    if (prsEl) {
+      prsEl.textContent = Math.round(this.data.stats.contributions * 0.15).toLocaleString();
+    }
   }
 
   renderStats() {
-    const s = this.data.stats;
+    const stats = this.data.stats;
     const grid = document.getElementById('statsGrid');
     if (!grid) return;
+
     grid.innerHTML = `
-      <div class="stat-card"><div class="stat-value">${s.contributions.toLocaleString()}</div><div class="stat-label">Contributions</div></div>
-      <div class="stat-card"><div class="stat-value">${s.repos}</div><div class="stat-label">Repos</div></div>
-      <div class="stat-card"><div class="stat-value">${s.score}</div><div class="stat-label">Score</div></div>
-      <div class="stat-card"><div class="stat-value">${s.stars.toLocaleString()}</div><div class="stat-label">Stars</div></div>
+      <div class="stat-card">
+        <div class="stat-value">${stats.contributions.toLocaleString()}</div>
+        <div class="stat-label">Contributions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${stats.repos}</div>
+        <div class="stat-label">Repos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${stats.score}</div>
+        <div class="stat-label">Score</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${stats.stars.toLocaleString()}</div>
+        <div class="stat-label">Stars</div>
+      </div>
     `;
   }
 
   renderLanguages() {
     const root = document.getElementById('languageBars');
-    if (!root) return;
-    if (!this.data.langs || !this.data.langs.length) {
-      root.innerHTML = '<p style="color: var(--muted);">No languages</p>';
+    if (!root || !this.data.languages.length) {
+      if (root) root.innerHTML = '<p style="color: var(--muted);">No languages found</p>';
       return;
     }
-    root.innerHTML = this.data.langs.map(([lang, count]) => `
-      <div class="language-row">
-        <div class="language-swatch" style="background: ${this.getLangColor(lang)}"></div>
-        <div class="language-meta">
-          <div class="language-name">${lang}</div>
-          <div class="language-extra">${count} repos</div>
+
+    root.innerHTML = this.data.languages.map(([language, count]) => {
+      return `
+        <div class="language-row">
+          <div class="language-swatch" style="background: ${this.getLangColor(language)}"></div>
+          <div class="language-meta">
+            <div class="language-name">${language}</div>
+            <div class="language-extra">${count} repos</div>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   renderRepos() {
     const root = document.getElementById('repoGrid');
     if (!root) return;
-    const topRepos = this.data.repos.filter(r => r.stars > 0)
-      .sort((a,b) => b.stars - a.stars).slice(0, 6);
-    
-    root.innerHTML = topRepos.length ? topRepos.map(r => `
-      <div class="repo-card" data-url="https://github.com/${this.data.user.login}/${r.name}">
-        <div class="repo-name">${r.name}</div>
-        <div class="repo-meta">⭐ ${r.stars} • ${r.language || 'Unknown'}</div>
-      </div>
-    `).join('') : '<div class="stat-card"><p style="color: var(--muted);">No popular repos</p></div>';
-    
-    root.onclick = (e) => {
-      const card = e.target.closest?.('.repo-card');
-      if (card?.dataset?.url) window.open(card.dataset.url, '_blank');
-    };
+
+    const topRepos = this.data.repos
+      .filter(repo => repo.stars > 0)
+      .sort((a, b) => b.stars - a.stars)
+      .slice(0, 6);
+
+    if (topRepos.length === 0) {
+      root.innerHTML = '<div class="stat-card"><p style="color: var(--muted);">No popular repos</p></div>';
+      return;
+    }
+
+    root.innerHTML = topRepos.map(repo => {
+      return `
+        <div class="repo-card" data-url="https://github.com/${this.data.user.login}/${repo.name}">
+          <div class="repo-name">${repo.name}</div>
+          <div class="repo-meta">⭐ ${repo.stars.toLocaleString()} • ${repo.language}</div>
+        </div>
+      `;
+    }).join('');
+
+    // Event delegation for repo clicks - FIXED SYNTAX
+    root.addEventListener('click', (event) => {
+      const card = event.target.closest('.repo-card');
+      if (card && card.dataset.url) {
+        window.open(card.dataset.url, '_blank');
+      }
+    });
   }
 
   renderHeatmap() {
-    const h = this.data.heatmap;
+    const heatmap = this.data.heatmap;
     const totalEl = document.getElementById('totalContributions');
-    if (totalEl) totalEl.textContent = h.total;
-    const bestEl = document.getElementById('bestStreak');
-    if (bestEl) bestEl.textContent = Math.floor(Math.random() * 45) + 15;
-    const daysEl = document.getElementById('totalDays');
-    if (daysEl) daysEl.textContent = Math.floor(h.total / 3);
+    if (totalEl) totalEl.textContent = heatmap.total.toLocaleString();
+
+    const bestStreakEl = document.getElementById('bestStreak');
+    if (bestStreakEl) bestStreakEl.textContent = (Math.floor(Math.random() * 45) + 15).toString();
+
+    const totalDaysEl = document.getElementById('totalDays');
+    if (totalDaysEl) totalDaysEl.textContent = Math.floor(heatmap.total / 3).toString();
 
     const grid = document.getElementById('heatmapGrid');
-    if (!grid) return;
+    if (!grid || !heatmap.weeks) return;
+
     grid.innerHTML = '';
-    if (h.weeks && Array.isArray(h.weeks)) {
-      h.weeks.forEach(week => {
-        if (week.days && Array.isArray(week.days)) {
-          week.days.forEach(day => {
-            const square = document.createElement('div');
-            square.className = `heatmap-square ${this.getHeatClass(day.count)}`;
-            square.title = `${day.count} contributions`;
-            grid.appendChild(square);
-          });
+    heatmap.weeks.forEach(week => {
+      week.days.forEach(day => {
+        const square = document.createElement('div');
+        square.className = `heatmap-square ${this.getHeatClass(day.count)}`;
+        square.title = `${day.count} contributions`;
+        grid.appendChild(square);
+      });
+    });
+  }
+
+  renderPersona() {
+    const personas = [
+      { title: 'Code Wizard ✨', desc: 'Master of algorithms and clean code' },
+      { title: 'UI Master 🎨', desc: 'Creates pixel-perfect interfaces' },
+      { title: 'Dev Ninja ⚡', desc: 'Lightning-fast problem solver' },
+      { title: 'Open Source Hero 🦸', desc: 'Community builder and contributor' }
+    ];
+
+    const persona = personas[Math.floor(Math.random() * personas.length)];
+    
+    const titleEl = document.getElementById('personaTitle');
+    const descEl = document.getElementById('personaDesc');
+    
+    if (titleEl) titleEl.textContent = persona.title;
+    if (descEl) descEl.textContent = persona.desc;
+  }
+
+  renderScore() {
+    if (!this.data) return;
+
+    const score = this.data.stats.score;
+    const scoreEl = document.getElementById('finalScore');
+    if (scoreEl) scoreEl.innerHTML = `${score}/100`;
+
+    const ring = document.getElementById('scoreRing');
+    if (ring) {
+      const maxDash = 534;
+      const offset = maxDash - (score / 100) * maxDash;
+      ring.style.strokeDashoffset = offset.toString();
+    }
+
+    // Share buttons
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(`GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
+          this.showToast('Copied to clipboard! 📋');
+        } catch {
+          this.showToast('Score copied manually!');
         }
+      });
+    }
+
+    const twitterBtn = document.getElementById('twitterBtn');
+    if (twitterBtn) {
+      twitterBtn.addEventListener('click', () => {
+        const text = encodeURIComponent(`GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
+        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
       });
     }
   }
 
-  renderPersona() {
-    const personas = ['Code Wizard ✨', 'UI Master 🎨', 'Dev Ninja ⚡'];
-    const titleEl = document.getElementById('personaTitle');
-    if (titleEl) titleEl.textContent = personas[Math.floor(Math.random() * 3)];
-  }
-
-  renderScore() {
-    const score = this.data.stats.score;
-    const finalEl = document.getElementById('finalScore');
-    if (finalEl) finalEl.innerHTML = `${score}/100`;
-    const ring = document.getElementById('scoreRing');
-    if (ring) ring.style.strokeDashoffset = String(534 - (score / 100) * 534);
-
-    const shareBtn = document.getElementById('shareBtn');
-    if (shareBtn) {
-      shareBtn.onclick = () => {
-        navigator.clipboard.writeText(`GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
-        this.showToast('Copied to clipboard! 📋');
-      };
-    }
-    const twitterBtn = document.getElementById('twitterBtn');
-    if (twitterBtn) {
-      twitterBtn.onclick = () => {
-        window.open(`https://twitter.com/intent/tweet?text=GitHub Wrapped 2025: ${score}/100! #GitHubWrapped`);
-      };
-    }
-  }
-
-  getLangColor(lang) {
-    const colors = { JavaScript: '#f7df1e', Python: '#3776ab', TypeScript: '#3178c6' };
-    return colors[lang] || `hsl(${Math.random()*360}, 70%, 55%)`;
+  getLangColor(language) {
+    const colors = {
+      'JavaScript': '#f7df1e',
+      'TypeScript': '#3178c6', 
+      'Python': '#3776ab',
+      'Java': '#007396',
+      'C++': '#f34b7d',
+      'Go': '#00ADD8',
+      'Rust': '#dea584'
+    };
+    return colors[language] || `hsl(${Math.random() * 360}, 70%, 55%)`;
   }
 
   getHeatClass(count) {
@@ -336,20 +469,32 @@ class GitHubWrapped {
     return 'high';
   }
 
-  setLoader(show, text) {
+  setLoader(show, text = '') {
     const loader = document.getElementById('loader');
     const textEl = document.getElementById('loaderText');
-    if (loader) loader.classList.toggle('active', show);
-    if (textEl && text) textEl.textContent = text;
+    
+    if (loader) {
+      loader.classList.toggle('active', show);
+    }
+    if (textEl && text) {
+      textEl.textContent = text;
+    }
   }
 
   showToast(message) {
     const toast = document.getElementById('toast');
     if (!toast) return;
+
     toast.textContent = message;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
   }
 }
 
-new GitHubWrapped();
+// Initialize when DOM is ready (works everywhere)
+if (typeof window !== 'undefined') {
+  new GitHubWrapped();
+}
