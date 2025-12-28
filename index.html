@@ -25,45 +25,38 @@
   <!-- Slides -->
   <main class="slider">
     <!-- HERO SCREEN -->
-    <section class="slide active" data-slide="0">
-      <div class="content">
-        <div class="hero-badge">2025</div>
-        <h1 class="hero-title">
-          GitHub
-          <span>Wrapped</span>
-        </h1>
-        <p class="hero-desc">Your year in code</p>
-        
-        <!-- Input Section -->
-        <div class="input-section">
-          <div class="input-group">
-            <input type="text" id="username" placeholder="Enter GitHub username..." autocomplete="off">
-            <button id="generateBtn" class="generate-btn" disabled>
-              <span>Generate</span>
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </button>
-          </div>
+    <!-- HERO SCREEN - SIMPLIFIED (Replace ONLY this section) -->
+  <section class="slide active" data-slide="0">
+    <div class="content">
+      <div class="hero-badge">2025</div>
+      <h1 class="hero-title">
+        GitHub
+        <span>Wrapped</span>
+      </h1>
+      <p class="hero-desc">Your year in code</p>
+      
+      <!-- PROMINENT INPUT - ALWAYS VISIBLE -->
+      <div class="input-section" style="margin: 60px 0;">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Enter GitHub username (torvalds)..." autocomplete="off">
+          <button id="generateBtn" class="generate-btn" disabled>Generate</button>
         </div>
-
-        <!-- Trending Repos Preview -->
-        <div class="trending-preview">
-          <div class="trending-header">
-            <h3>🔥 Trending Now</h3>
-            <div class="filter-tabs">
-              <button class="tab active" data-filter="all">All</button>
-              <button class="tab" data-filter="javascript">JS</button>
-              <button class="tab" data-filter="python">Python</button>
-              <button class="tab" data-filter="rust">Rust</button>
-            </div>
-          </div>
-          <div id="trendingRepos" class="trending-grid">
-            <!-- Loaded by JS -->
-          </div>
+        <div style="margin-top: 16px; font-size: 14px; color: #64748b;">
+          Try: torvalds, sindresorhus, facebook
         </div>
       </div>
-    </section>
+  
+      <!-- TINY TRENDING PREVIEW - FIXED HEIGHT -->
+      <div class="trending-preview" style="max-height: 300px; overflow: hidden;">
+        <div class="trending-header">
+          <h3 style="margin: 0;">🔥 Quick Preview</h3>
+        </div>
+        <div id="trendingRepos" class="trending-grid" style="max-height: 240px; overflow-y: auto;">
+          <!-- Loads 3 tiny cards only -->
+        </div>
+      </div>
+    </div>
+  </section>
 
     <!-- Profile Screen -->
     <section class="slide" data-slide="1">
