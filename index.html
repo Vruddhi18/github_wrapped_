@@ -25,16 +25,12 @@
     </svg>
   </div>
 
-  <!-- MOBILE DOTS -->
+  <!-- MOBILE DOTS (9 slides) -->
   <div class="nav-dots">
     <span class="nav-dot active" data-slide="0"></span>
-    <span class="nav-dot" data-slide="1"></span>
-    <span class="nav-dot" data-slide="2"></span>
-    <span class="nav-dot" data-slide="3"></span>
-    <span class="nav-dot" data-slide="4"></span>
-    <span class="nav-dot" data-slide="5"></span>
-    <span class="nav-dot" data-slide="6"></span>
-    <span class="nav-dot" data-slide="7"></span>
+    <span class="nav-dot" data-slide="1"></span><span class="nav-dot" data-slide="2"></span><span class="nav-dot" data-slide="3"></span>
+    <span class="nav-dot" data-slide="4"></span><span class="nav-dot" data-slide="5"></span><span class="nav-dot" data-slide="6"></span>
+    <span class="nav-dot" data-slide="7"></span><span class="nav-dot" data-slide="8"></span>
   </div>
 
   <main class="slider">
@@ -46,7 +42,7 @@
             <span class="hero-year" data-scroll>2025</span>
             <span class="hero-main" data-scroll>GitHub Wrapped</span>
           </h1>
-          <p class="hero-subtitle" data-scroll>Discover your coding journey in 2025</p>
+          <p class="hero-subtitle" data-scroll>Discover your real coding journey</p>
         </div>
 
         <div class="input-section" data-scroll>
@@ -58,13 +54,13 @@
         </div>
 
         <div class="profiles-section">
-          <h3 class="section-title">Featured Profiles</h3>
+          <h3 class="section-title">Trending Developers</h3>
           <div class="profiles-grid" id="trendingProfiles"></div>
         </div>
 
         <div class="hero-footer" data-scroll>
-          <a href="#" class="footer-link">Request a feature ⚡️</a>
-          <a href="#" class="footer-link">Report a bug 🐛</a>
+          <a href="#" class="footer-link">Request feature ⚡️</a>
+          <a href="#" class="footer-link">Report bug 🐛</a>
           <a href="#" class="footer-link">Source Code</a>
         </div>
       </div>
@@ -79,37 +75,45 @@
       </div>
     </section>
 
-    <!-- SLIDE 2: STATS -->
+    <!-- SLIDE 2: STATS BREAKDOWN -->
     <section class="slide" data-slide="2">
       <div class="slide-content">
         <h2 class="slide-title" id="statsTitle">2025 Highlights</h2>
         <div class="stats-grid" id="statsGrid">
-          <div class="stat-card"><div class="stat-number">0</div><div>Commits</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>PRs</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>Merged</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>Issues</div></div>
           <div class="stat-card"><div class="stat-number">0</div><div>Stars</div></div>
-          <div class="stat-card"><div class="stat-number">0</div><div>Repos</div></div>
-          <div class="stat-card"><div class="stat-number">0</div><div>Languages</div></div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 3: LANGUAGES -->
+    <!-- SLIDE 3: PR BREAKDOWN (NEW!) -->
     <section class="slide" data-slide="3">
+      <div class="slide-content">
+        <h2 class="slide-title">PR Breakdown</h2>
+        <div id="prContent"></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: LANGUAGES -->
+    <section class="slide" data-slide="4">
       <div class="slide-content">
         <h2 class="slide-title">Languages</h2>
         <div class="languages-grid" id="languagesGrid"></div>
       </div>
     </section>
 
-    <!-- SLIDE 4: TOP REPOS -->
-    <section class="slide" data-slide="4">
+    <!-- SLIDE 5: TOP REPOS -->
+    <section class="slide" data-slide="5">
       <div class="slide-content">
         <h2 class="slide-title">Top Repositories</h2>
         <div class="repos-grid" id="reposGrid"></div>
       </div>
     </section>
 
-    <!-- SLIDE 5: HEATMAP -->
-    <section class="slide" data-slide="5">
+    <!-- SLIDE 6: HEATMAP -->
+    <section class="slide" data-slide="6">
       <div class="slide-content">
         <h2 class="slide-title">Contributions Heatmap</h2>
         <div class="heatmap-container">
@@ -121,16 +125,16 @@
       </div>
     </section>
 
-    <!-- SLIDE 6: PERSONA -->
-    <section class="slide" data-slide="6">
+    <!-- SLIDE 7: PERSONA -->
+    <section class="slide" data-slide="7">
       <div class="slide-content">
         <h2 class="slide-title">Your Developer Type</h2>
         <div id="personaContent" class="persona-card"></div>
       </div>
     </section>
 
-    <!-- SLIDE 7: FINAL SCORE -->
-    <section class="slide" data-slide="7">
+    <!-- SLIDE 8: FINAL SCORE -->
+    <section class="slide" data-slide="8">
       <div class="slide-content">
         <h2 class="slide-title">Final Score</h2>
         <div id="scoreContent" class="score-container"></div>
