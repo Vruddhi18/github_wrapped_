@@ -27,16 +27,20 @@
 
   <!-- MOBILE DOTS -->
   <div class="nav-dots">
-    <span class="nav-dot active" data-slide="0"></span><span class="nav-dot" data-slide="1"></span><span class="nav-dot" data-slide="2"></span>
-    <span class="nav-dot" data-slide="3"></span><span class="nav-dot" data-slide="4"></span><span class="nav-dot" data-slide="5"></span>
-    <span class="nav-dot" data-slide="6"></span><span class="nav-dot" data-slide="7"></span>
+    <span class="nav-dot active" data-slide="0"></span>
+    <span class="nav-dot" data-slide="1"></span>
+    <span class="nav-dot" data-slide="2"></span>
+    <span class="nav-dot" data-slide="3"></span>
+    <span class="nav-dot" data-slide="4"></span>
+    <span class="nav-dot" data-slide="5"></span>
+    <span class="nav-dot" data-slide="6"></span>
+    <span class="nav-dot" data-slide="7"></span>
   </div>
 
   <main class="slider">
-    <!-- SLIDE 0: SCROLLABLE HERO - EXACT git-wrapped.com -->
+    <!-- SLIDE 0: SCROLLABLE HERO -->
     <section class="slide active scrollable-hero" data-slide="0">
       <div class="hero-scroll-container">
-        <!-- HEADER SECTION -->
         <div class="hero-header">
           <h1 class="hero-title">
             <span class="hero-year" data-scroll>2025</span>
@@ -45,26 +49,19 @@
           <p class="hero-subtitle" data-scroll>Discover your coding journey in 2025</p>
         </div>
 
-        <!-- INPUT SECTION -->
         <div class="input-section" data-scroll>
           <div class="input-container">
-            <input type="text" id="username" placeholder="github.com/" class="username-input">
-            <button id="generateBtn" class="generate-btn" disabled>
-              <span>Generate</span>
-            </button>
+            <input type="text" id="username" placeholder="github.com/vrudhisah" class="username-input">
+            <button id="generateBtn" class="generate-btn" disabled>Generate</button>
           </div>
           <p class="input-hint">Try popular profiles below</p>
         </div>
 
-        <!-- FEATURED PROFILES - EXACT LAYOUT -->
         <div class="profiles-section">
           <h3 class="section-title">Featured Profiles</h3>
-          <div class="profiles-grid" id="trendingProfiles">
-            <!-- POPULATED BY JS -->
-          </div>
+          <div class="profiles-grid" id="trendingProfiles"></div>
         </div>
 
-        <!-- FOOTER LINKS - EXACT -->
         <div class="hero-footer" data-scroll>
           <a href="#" class="footer-link">Request a feature ⚡️</a>
           <a href="#" class="footer-link">Report a bug 🐛</a>
@@ -73,14 +70,72 @@
       </div>
     </section>
 
-    <!-- OTHER SLIDES -->
-    <section class="slide" data-slide="1"><div class="slide-content" id="slide1"></div></section>
-    <section class="slide" data-slide="2"><div class="slide-content" id="slide2"></div></section>
-    <section class="slide" data-slide="3"><div class="slide-content" id="slide3"></div></section>
-    <section class="slide" data-slide="4"><div class="slide-content" id="slide4"></div></section>
-    <section class="slide" data-slide="5"><div class="slide-content" id="slide5"></div></section>
-    <section class="slide" data-slide="6"><div class="slide-content" id="slide6"></div></section>
-    <section class="slide" data-slide="7"><div class="slide-content" id="slide7"></div></section>
+    <!-- SLIDE 1: PROFILE -->
+    <section class="slide" data-slide="1">
+      <div class="slide-content">
+        <div id="profileContent">
+          <div style="opacity:0.5;">Enter username to generate →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: STATS -->
+    <section class="slide" data-slide="2">
+      <div class="slide-content">
+        <h2 class="slide-title" id="statsTitle">2025 Highlights</h2>
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card"><div class="stat-number">0</div><div>Commits</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>Stars</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>Repos</div></div>
+          <div class="stat-card"><div class="stat-number">0</div><div>Languages</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: LANGUAGES -->
+    <section class="slide" data-slide="3">
+      <div class="slide-content">
+        <h2 class="slide-title">Languages</h2>
+        <div class="languages-grid" id="languagesGrid"></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: TOP REPOS -->
+    <section class="slide" data-slide="4">
+      <div class="slide-content">
+        <h2 class="slide-title">Top Repositories</h2>
+        <div class="repos-grid" id="reposGrid"></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: HEATMAP -->
+    <section class="slide" data-slide="5">
+      <div class="slide-content">
+        <h2 class="slide-title">Contributions Heatmap</h2>
+        <div class="heatmap-container">
+          <div class="heatmap-header">
+            <span id="totalCommits">0</span> contributions in 2025
+          </div>
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: PERSONA -->
+    <section class="slide" data-slide="6">
+      <div class="slide-content">
+        <h2 class="slide-title">Your Developer Type</h2>
+        <div id="personaContent" class="persona-card"></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: FINAL SCORE -->
+    <section class="slide" data-slide="7">
+      <div class="slide-content">
+        <h2 class="slide-title">Final Score</h2>
+        <div id="scoreContent" class="score-container"></div>
+      </div>
+    </section>
   </main>
 
   <div id="loader" class="loader">
