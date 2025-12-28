@@ -39,33 +39,55 @@
   <main class="slider" id="slider">
     <!-- Slide 1: Welcome -->
     <!-- Slide 0: Top Repos Homepage (NEW) -->
+<!-- Slide 0: Hero Homepage with Neon Orbit Theme -->
 <section class="slide active" data-index="0">
-  <div class="slide-inner">
-    <div class="badge">⭐ Top Repos</div>
-    <h1 class="hero-title">
-      <span>Explore</span>
-      <span>Trending</span>
-      <span>Repos</span>
+  <div class="slide-inner hero-home">
+    <!-- Floating Orbit Particles -->
+    <div class="orbit-particles">
+      <div class="orbit-ring"></div>
+      <div class="orbit-ring orbit-delay-1"></div>
+      <div class="orbit-ring orbit-delay-2"></div>
+    </div>
+    
+    <div class="badge neon-glow">🌌 2025 GitHub Wrapped</div>
+    
+    <h1 class="hero-title neon-text">
+      <span>Your</span>
+      <span>Code</span>
+      <span>Universe</span>
     </h1>
-    <p class="hero-subtitle">Discover top GitHub projects by language</p>
+    <p class="hero-subtitle pulse-glow">Discover your year in code. Explore top projects first ✨</p>
     
-    <!-- Language Tabs -->
-    <div class="tab-row">
-      <button class="tab-btn active" data-lang="all">All</button>
-      <button class="tab-btn" data-lang="javascript">JavaScript</button>
-      <button class="tab-btn" data-lang="python">Python</button>
-      <button class="tab-btn" data-lang="rust">Rust</button>
-      <button class="tab-btn" data-lang="go">Go</button>
+    <!-- Username Input - Hidden until typing -->
+    <div class="input-container" id="inputContainer">
+      <div class="input-wrapper">
+        <input id="username" type="text" placeholder="torvalds, sindresorhus..." autocomplete="off">
+        <div class="input-glow"></div>
+      </div>
+      <button id="generateBtn" class="gradient-btn neon-btn" disabled>
+        <span>Launch Wrapped</span>
+        <svg class="btn-rocket" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </button>
     </div>
     
-    <!-- Top Repos Grid -->
-    <div id="topReposGrid" class="top-repos-grid">
-      <div class="loading-skeleton">Loading top repos...</div>
-    </div>
-    
-    <div class="input-row" style="margin-top: 2rem;">
-      <input id="username" type="text" placeholder="Enter your username" autocomplete="off">
-      <button id="generateBtn" class="gradient-btn" disabled>Generate My Wrapped</button>
+    <!-- Top Repos Section - Always Visible -->
+    <div class="repos-section">
+      <div class="section-header">
+        <h3 class="section-title">⭐ Trending Repositories</h3>
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-tab active" data-lang="all"><span>All</span></button>
+          <button class="filter-tab" data-lang="javascript"><span>JS</span></button>
+          <button class="filter-tab" data-lang="python"><span>🐍 Python</span></button>
+          <button class="filter-tab" data-lang="rust"><span>🦀 Rust</span></button>
+          <button class="filter-tab" data-lang="go"><span>🐹 Go</span></button>
+          <button class="filter-tab" data-lang="typescript"><span>TS</span></button>
+        </div>
+      </div>
+      <div id="topReposGrid" class="top-repos-grid">
+        <div class="repo-skeleton"></div>
+        <div class="repo-skeleton"></div>
+        <div class="repo-skeleton"></div>
+      </div>
     </div>
   </div>
 </section>
