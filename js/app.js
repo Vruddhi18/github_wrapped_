@@ -115,50 +115,30 @@ class GitHubWrapped {
     });
   }
 
-  async loadTrendingRepos() {
+    async loadTrendingRepos() {
     const container = document.getElementById('trendingRepos');
     if (!container) return;
-
-    // Show loading state
-    container.innerHTML = `
-      <div class="trending-card" style="display: flex; align-items: center; justify-content: center; height: 120px; color: #64748b;">
-        Loading trending repos...
-      </div>
-    `;
-
+  
+    container.innerHTML = '<div style="padding: 40px; text-align: center; color: #64748b;">Loading preview...</div>';
+  
     try {
-      const queries = [
-        'stars:>15000', // Popular repos
-        'language:javascript stars:>8000',
-        'language:python stars:>5000', 
-        'language:rust stars:>1000',
-        'language:go stars:>2000',
-        'language:typescript stars:>5000'
-      ];
-
-      const allRepos = [];
+      // JUST 3 POPULAR REPOS - NO RATE LIMIT ISSUES
+      const response = await fetch('https://api.github.com/search/repositories?q=stars:>20000&sort=stars&per_page=3');
+      const data = await response.json();
       
-      // Fetch repos with rate limit safety
-      for (const query of queries.slice(0, 4)) {
-        try {
-          const response = await fetch(
-            `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=3`
-          );
-          
-          if (response.ok) {
-            const data = await response.json();
-            data.items?.forEach(repo => {
-              repo.languageDisplay = repo.language || 'Unknown';
-              allRepos.push(repo);
-            });
-          }
-          
-          // Small delay to respect rate limits
-          await new Promise(resolve => setTimeout(resolve, 200));
-        } catch(e) {
-          console.warn('Failed to fetch repos for query:', query);
-        }
+      if (data.items) {
+        container.innerHTML = data.items.map(repo => `
+          <div class="trending-card" data-url="${repo.html_url}" style="padding: 16px; min-height: 80px;">
+            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${repo.name}</div>
+            <div style="color: #94a3b8; font-size: 12px;">⭐ ${repo.stargazers_count.toLocaleString()} stars</div>
+          </div>
+        `).join('');
       }
+    } catch(e) {
+      container.innerHTML = '<div style="padding: 40px; text-align: center; color: #64748b;">Trending repos coming soon...</div>';
+    }
+  }
+
 
       // Deduplicate and sort
       this.topReposData = allRepos
