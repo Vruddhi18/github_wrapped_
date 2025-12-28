@@ -269,14 +269,19 @@ class GitHubWrapped {
     const grid = document.getElementById('heatmapGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    h.weeks.forEach(week => {
-      week.days.forEach(day => {
-        const square = document.createElement('div');
-        square.className = `heatmap-square ${this.getHeatClass(day.count)}`;
-        square.title = `${day.count} contributions`;
-        grid.appendChild(square);
+    // ✅ FIXED: Safe array check
+    if (h.weeks && Array.isArray(h.weeks)) {
+      h.weeks.forEach(week => {
+        if (week.days && Array.isArray(week.days)) {
+          week.days.forEach(day => {
+            const square = document.createElement('div');
+            square.className = `heatmap-square ${this.getHeatClass(day.count)}`;
+            square.title = `${day.count} contributions`;
+            grid.appendChild(square);
+          });
+        }
       });
-    });
+    }
   }
 
   renderPersona() {
@@ -303,7 +308,7 @@ class GitHubWrapped {
     return colors[lang] || `hsl(${Math.random()*360}, 70%, 55%)`;
   }
 
-  getHeatClass(count) {
+  getHeatClass(count) {  // ✅ Fixed method name (was getHeatClass)
     if (count === 0) return 'empty';
     if (count < 10) return 'low';
     if (count < 20) return 'med';
